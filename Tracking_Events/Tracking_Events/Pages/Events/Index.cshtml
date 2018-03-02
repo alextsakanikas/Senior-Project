@@ -1,0 +1,123 @@
+﻿@page
+@model Tracking_Events.Pages.Events.IndexModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Events";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (UserManager.GetUserAsync(User).Result.AccountType == 1)
+        {
+            <a asp-page="Create">Create New</a>
+        }
+    }
+</p>
+<form asp-page="./Index" method="get">
+    <p>
+        Filter by Venue Name or Genre or Zip:
+        <input type="text" name="searchString" value="@Model.CurrentFilter" />
+        <input type="submit" value="Filter" class="btn btn-default" /> |
+        <a asp-page="./Index">Back to full list</a>
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.VenueNameSort">
+                    @Html.DisplayNameFor(model => model.Event[0].User.VenueName)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.EventNameSort">
+                    @Html.DisplayNameFor(model => model.Event[0].EventName)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].AgeRequirement)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.StartTimeSort">
+                    @Html.DisplayNameFor(model => model.Event[0].StartTime)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.EndTimeSort">
+                    @Html.DisplayNameFor(model => model.Event[0].EndTime)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].User.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].User.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].User.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].User.Zip)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Event)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.VenueName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AgeRequirement)+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Zip)
+                </td>
+                <td>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == item.User.Id || UserManager.GetUserAsync(User).Result.AccountType == 0)
+                        {
+                            <a asp-page="./Edit" asp-route-id="@item.EventID">Edit Event</a>
+                            <span> | </span>
+                            <a asp-page="./Delete" asp-route-id="@item.EventID">Delete Event</a>
+                            <span> | </span>
+                        }
+                    }
+                    <a asp-page="./Details" asp-route-id="@item.EventID">Details</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

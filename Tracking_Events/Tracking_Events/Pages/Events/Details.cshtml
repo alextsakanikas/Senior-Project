@@ -1,0 +1,93 @@
+﻿@page
+@model Tracking_Events.Pages.Events.DetailsModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.User.VenueName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.User.VenueName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.EventName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.EventName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Genre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.Genre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.AgeRequirement)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.AgeRequirement)+
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.StartTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.StartTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.EndTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.EndTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.Description)
+            <br />
+            <br />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.User.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.User.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.User.City)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.User.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.User.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.User.State)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.User.Zip)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Event.User.Zip)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == Model.Event.User.Id)
+        {
+            <a asp-page="./Edit" asp-route-id="@Model.Event.EventID">Edit Event Details</a> <span> | </span>
+        }
+    }
+    <a asp-page="./Index">Back to List</a>
+</div>
