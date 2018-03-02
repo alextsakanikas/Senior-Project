@@ -171,15 +171,15 @@ namespace Tracking_Events.Migrations
                     EndTime = table.Column<DateTime>(nullable: false),
                     EventName = table.Column<string>(nullable: false),
                     Genre = table.Column<string>(nullable: false),
-                    OwnerID = table.Column<string>(nullable: true),
-                    StartTime = table.Column<DateTime>(nullable: false)
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Event", x => x.EventID);
                     table.ForeignKey(
-                        name: "FK_Event_AspNetUsers_OwnerID",
-                        column: x => x.OwnerID,
+                        name: "FK_Event_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -225,9 +225,9 @@ namespace Tracking_Events.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_OwnerID",
+                name: "IX_Event_UserId",
                 table: "Event",
-                column: "OwnerID");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

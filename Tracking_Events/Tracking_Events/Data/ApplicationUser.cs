@@ -65,7 +65,6 @@ namespace Tracking_Events.Data
         public string Description { get; set; }
 
         //Used to reference AspNetUser table where the account is stored
-        [ForeignKey("OwnerID")]
         public ApplicationUser User { get; set; }
     }
 }

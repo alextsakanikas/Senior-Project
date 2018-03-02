@@ -11,7 +11,7 @@ using Tracking_Events.Data;
 namespace Tracking_Events.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180302025336_ApplicationSchema")]
+    [Migration("20180302191037_ApplicationSchema")]
     partial class ApplicationSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,13 +212,13 @@ namespace Tracking_Events.Migrations
                     b.Property<string>("Genre")
                         .IsRequired();
 
-                    b.Property<string>("OwnerID");
-
                     b.Property<DateTime>("StartTime");
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("EventID");
 
-                    b.HasIndex("OwnerID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Event");
                 });
@@ -272,7 +272,8 @@ namespace Tracking_Events.Migrations
                 {
                     b.HasOne("Tracking_Events.Data.ApplicationUser", "User")
                         .WithMany("Events")
-                        .HasForeignKey("OwnerID");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

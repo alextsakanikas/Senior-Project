@@ -123,5 +123,11 @@ namespace Tracking_Events.Pages.Account.Manage
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
+
+        public IActionResult OnPostDelete()
+        {
+            
+            return RedirectToPage("./DeleteConfirm");
+        }
     }
 }
