@@ -106,10 +106,13 @@
                 <td>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == item.User.Id || UserManager.GetUserAsync(User).Result.AccountType == 0)
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == item.User.Id)
                         {
                             <a asp-page="./Edit" asp-route-id="@item.EventID">Edit Event</a>
                             <span> | </span>
+                        }
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == item.User.Id || UserManager.GetUserAsync(User).Result.AccountType == 0)
+                        {
                             <a asp-page="./Delete" asp-route-id="@item.EventID">Delete Event</a>
                             <span> | </span>
                         }
