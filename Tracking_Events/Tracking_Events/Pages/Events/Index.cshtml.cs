@@ -36,7 +36,7 @@ namespace Tracking_Events.Pages.Events
             StartTimeSort = sortOrder == "Starttime" ? "start_time_desc" : "Starttime";
             EndTimeSort = sortOrder == "Endtime" ? "end_time_desc" : "Endtime";
 
-            //Delete Events 3 hours past expire time
+            //Delete Events 3 hours past end time
             _context.Event.RemoveRange(_context.Event.Where(e => e.EndTime < DateTime.Now.AddHours(3)));
             await _context.SaveChangesAsync();
 
