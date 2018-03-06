@@ -17,10 +17,10 @@
         }
     }
 </p>
-<form asp-page="./Index" method="get">
+<form asp-page="./Index" method="get" asp-route-sortOrder="@Model.CurrentSort">
     <p>
-        Filter by Venue Name Rating:
-        <input type="text" name="searchString" value="@Model.CurrentFilter" />
+        Filter by Venue Name or Rating:
+        <input type="text" name="searchString" />
         <input type="submit" value="Filter" class="btn btn-default" /> |
         <a asp-page="./Index">Back to full list</a>
     </p>
@@ -29,13 +29,17 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Reviews[0].Venue.VenueName)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.VenueSort" asp-route-searchString="@Model.CurrentSearch">
+                    @Html.DisplayNameFor(model => model.Reviews[0].Venue.VenueName)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Reviews[0].UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Reviews[0].Rating)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.RatingSort" asp-route-searchString="@Model.CurrentSearch">
+                    @Html.DisplayNameFor(model => model.Reviews[0].Rating)
+                </a>
             </th>
             <th></th>
         </tr>

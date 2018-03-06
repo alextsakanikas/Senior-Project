@@ -20,9 +20,47 @@ namespace Tracking_Events.Pages.Reviews
 
         public IList<Review> Reviews { get;set; }
 
-        public async Task OnGetAsync()
+        public string CurrentSort { get; set; }
+        public string CurrentSearch { get; set; }
+
+        #region Sorting Purposes
+        public string VenueSort { get; set; }
+        public string RatingSort { get; set; }
+        #endregion
+
+        public async Task OnGetAsync(string sortOrder, string searchString)
         {
-            Reviews = await _context.Review.Include(r => r.Venue).ToListAsync();
+            VenueSort = String.IsNullOrEmpty(sortOrder) ? "venue_name_desc" : "";
+            RatingSort = sortOrder == "Rating" ? "rating_desc" : "Rating";
+            CurrentSort = sortOrder;
+
+            IQueryable<Review> reviews = _context.Review.Include(r => r.Venue).AsQueryable();
+
+            #region Filtering
+            CurrentSearch = searchString;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                reviews = reviews.Where(s => s.Venue.VenueName.Contains(searchString) || s.Rating.ToString().Equals(searchString));
+            }
+            #endregion
+
+            switch (sortOrder)
+            {
+                case "venue_name_desc":
+                    reviews = reviews.OrderByDescending(s => s.Venue.VenueName);
+                    break;
+                case "Rating":
+                    reviews = reviews.OrderBy(s => s.Rating);
+                    break;
+                case "rating_desc":
+                    reviews = reviews.OrderByDescending(s => s.Rating);
+                    break;
+                default:
+                    reviews = reviews.OrderBy(s => s.Venue.VenueName);
+                    break;
+            }
+
+            Reviews = await reviews.AsNoTracking().ToListAsync();
         }
     }
 }
