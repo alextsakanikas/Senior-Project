@@ -22,9 +22,12 @@ namespace Tracking_Events.Data
             // Add your customizations after calling base.OnModelCreating(builder);
 
             builder.Entity<Event>().HasOne(e => e.User).WithMany(a => a.Events).OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Review>().HasOne(r => r.Venue).WithMany(a => a.VenueReviews).OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Event> Event { get; set; }
+        public DbSet<Review> Review { get; set; }
     }
 }

@@ -185,6 +185,28 @@ namespace Tracking_Events.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Review",
+                columns: table => new
+                {
+                    ReviewID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: false),
+                    Rating = table.Column<int>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
+                    VenueId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Review", x => x.ReviewID);
+                    table.ForeignKey(
+                        name: "FK_Review_AspNetUsers_VenueId",
+                        column: x => x.VenueId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -228,6 +250,11 @@ namespace Tracking_Events.Migrations
                 name: "IX_Event_UserId",
                 table: "Event",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Review_VenueId",
+                table: "Review",
+                column: "VenueId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -249,6 +276,9 @@ namespace Tracking_Events.Migrations
 
             migrationBuilder.DropTable(
                 name: "Event");
+
+            migrationBuilder.DropTable(
+                name: "Review");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

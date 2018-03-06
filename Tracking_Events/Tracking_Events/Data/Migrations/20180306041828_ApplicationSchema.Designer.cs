@@ -11,7 +11,7 @@ using Tracking_Events.Data;
 namespace Tracking_Events.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180302191037_ApplicationSchema")]
+    [Migration("20180306041828_ApplicationSchema")]
     partial class ApplicationSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,6 +223,27 @@ namespace Tracking_Events.Migrations
                     b.ToTable("Event");
                 });
 
+            modelBuilder.Entity("Tracking_Events.Data.Review", b =>
+                {
+                    b.Property<int>("ReviewID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<int>("Rating");
+
+                    b.Property<string>("UserName");
+
+                    b.Property<string>("VenueId");
+
+                    b.HasKey("ReviewID");
+
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("Review");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -273,6 +294,14 @@ namespace Tracking_Events.Migrations
                     b.HasOne("Tracking_Events.Data.ApplicationUser", "User")
                         .WithMany("Events")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Tracking_Events.Data.Review", b =>
+                {
+                    b.HasOne("Tracking_Events.Data.ApplicationUser", "Venue")
+                        .WithMany("VenueReviews")
+                        .HasForeignKey("VenueId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

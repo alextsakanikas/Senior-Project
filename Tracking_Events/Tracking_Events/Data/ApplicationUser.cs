@@ -32,6 +32,8 @@ namespace Tracking_Events.Data
         [Display(Name = "Venue Name")]
         public string VenueName { get; set; }
         public List<Event> Events { get; set; }
+        
+        public List<Review> VenueReviews { get; set; }
     }
 
     public class Event
@@ -66,5 +68,25 @@ namespace Tracking_Events.Data
 
         //Used to reference AspNetUser table where the account is stored
         public ApplicationUser User { get; set; }
+    }
+
+    public class Review
+    {
+        [Key]
+        public int ReviewID { get; set; }
+        
+        [Display(Name = "Reviewer")]
+        public string UserName { get; set; }
+
+        public ApplicationUser Venue { get; set; }
+
+        [Required]
+        [Display(Name = "Rating out of 5")]
+        [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5")]
+        public int Rating { get; set; }
+
+        [Required]
+        [Display(Name = "Feedback")]
+        public string Description { get; set; }
     }
 }

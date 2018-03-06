@@ -1,0 +1,67 @@
+﻿@page
+@model Tracking_Events.Pages.Reviews.IndexModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Anonymous Reviews";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (UserManager.GetUserAsync(User).Result.AccountType == 2)
+        {
+            <a asp-page="Create">Create New</a>
+        }
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviews[0].Venue.VenueName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviews[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviews[0].Rating)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Reviews)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Venue.VenueName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.UserName == item.UserName)
+                        {
+                            <a asp-page="./Edit" asp-route-id="@item.ReviewID">Edit</a>
+                            <span> | </span>
+                        }
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.UserName == item.UserName || UserManager.GetUserAsync(User).Result.AccountType == 0)
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.ReviewID">Delete</a>
+                            <span> | </span>
+                        }
+                    }
+                    <a asp-page="./Details" asp-route-id="@item.ReviewID">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

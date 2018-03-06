@@ -7,31 +7,29 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Tracking_Events.Data;
 
-namespace Tracking_Events.Pages.Events
+namespace Tracking_Events.Pages.Reviews
 {
     public class DetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Tracking_Events.Data.ApplicationDbContext _context;
 
-        public DetailsModel(ApplicationDbContext context)
+        public DetailsModel(Tracking_Events.Data.ApplicationDbContext context)
         {
             _context = context;
         }
-        
-        //Created to get single event and use that to get user data
-        public Event Event { get; set; }
 
-        public IActionResult OnGet(string id)
+        public Review Review { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            //Used to get Parent and Foreign tables
-            Event = _context.Event.Include(ev => ev.User).Where(e => e.EventID == Convert.ToInt32(id)).FirstOrDefault();
+            Review = await _context.Review.Include(r => r.Venue).SingleOrDefaultAsync(m => m.ReviewID == Convert.ToInt32(id));
 
-            if (Event == null)
+            if (Review == null)
             {
                 return NotFound();
             }
