@@ -86,7 +86,7 @@
     {
         @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == Model.Event.User.Id)
         {
-            <a asp-page="./Edit" asp-route-id="@Model.Event.EventID">Edit Event Details</a> <span> | </span>
+            <a asp-page="./Edit" asp-route-id="@Model.Event.EventID">Edit Event</a> <span> | </span>
         }
     }
     <a asp-page="./Index">Back to List</a>

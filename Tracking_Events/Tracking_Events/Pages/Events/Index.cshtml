@@ -17,10 +17,10 @@
         }
     }
 </p>
-<form asp-page="./Index" method="get">
+<form asp-page="./Index" method="get" asp-route-sortOrder="@Model.CurrentFilter">
     <p>
         Filter by Venue Name or Genre or Zip:
-        <input type="text" name="searchString" value="@Model.CurrentFilter" />
+        <input type="text" name="searchString" />
         <input type="submit" value="Filter" class="btn btn-default" /> |
         <a asp-page="./Index">Back to full list</a>
     </p>
@@ -29,12 +29,12 @@
     <thead>
         <tr>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.VenueNameSort">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.VenueNameSort" asp-route-searchString="@Model.CurrentSearch">
                     @Html.DisplayNameFor(model => model.Event[0].User.VenueName)
                 </a>
             </th>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.EventNameSort">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.EventNameSort" asp-route-searchString="@Model.CurrentSearch">
                     @Html.DisplayNameFor(model => model.Event[0].EventName)
                 </a>
             </th>
@@ -45,12 +45,12 @@
                 @Html.DisplayNameFor(model => model.Event[0].AgeRequirement)
             </th>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.StartTimeSort">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.StartTimeSort" asp-route-searchString="@Model.CurrentSearch">
                     @Html.DisplayNameFor(model => model.Event[0].StartTime)
                 </a>
             </th>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.EndTimeSort">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.EndTimeSort" asp-route-searchString="@Model.CurrentSearch">
                     @Html.DisplayNameFor(model => model.Event[0].EndTime)
                 </a>
             </th>

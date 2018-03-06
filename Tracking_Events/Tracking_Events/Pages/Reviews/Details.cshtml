@@ -1,6 +1,7 @@
 ﻿@page
 @model Tracking_Events.Pages.Reviews.DetailsModel
-
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Details";
 }
@@ -38,6 +39,12 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Review.ReviewID">Edit</a> |
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (UserManager.GetUserAsync(User).Result.AccountType == 2 && UserManager.GetUserAsync(User).Result.UserName == Model.Review.UserName)
+        {
+            <a asp-page="./Edit" asp-route-id="@Model.Review.ReviewID">Edit Review</a> <span> | </span>
+        }
+    }
     <a asp-page="./Index">Back to List</a>
 </div>

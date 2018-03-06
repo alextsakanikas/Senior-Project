@@ -29,7 +29,7 @@ namespace Tracking_Events.Pages.Reviews
                 return NotFound();
             }
 
-            Review = await _context.Review.SingleOrDefaultAsync(m => m.ReviewID == Convert.ToInt32(id));
+            Review = await _context.Review.Include(r => r.Venue).SingleOrDefaultAsync(m => m.ReviewID == Convert.ToInt32(id));
 
             if (Review == null)
             {

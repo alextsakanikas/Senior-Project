@@ -21,6 +21,7 @@ namespace Tracking_Events.Pages.Events
         public IList<Event> Event { get; set; }
 
         public string CurrentFilter { get; set; }
+        public string CurrentSearch { get; set; }
 
         #region Sorting Purposes
         public string EventNameSort { get; set; }
@@ -35,7 +36,8 @@ namespace Tracking_Events.Pages.Events
             VenueNameSort = sortOrder == "Venue" ? "venue_desc" : "Venue";
             StartTimeSort = sortOrder == "Starttime" ? "start_time_desc" : "Starttime";
             EndTimeSort = sortOrder == "Endtime" ? "end_time_desc" : "Endtime";
-
+            CurrentFilter = sortOrder;
+            
             //Delete Events 3 hours past end time
             _context.Event.RemoveRange(_context.Event.Where(e => e.EndTime < DateTime.Now.AddHours(3)));
             await _context.SaveChangesAsync();
@@ -43,7 +45,7 @@ namespace Tracking_Events.Pages.Events
             IQueryable<Event> events = _context.Event.Include(ev => ev.User).AsQueryable();
 
             #region Filtering
-            CurrentFilter = searchString;
+            CurrentSearch = searchString;
             if (!String.IsNullOrEmpty(searchString))
             {
                 events = events.Where(s => s.User.VenueName.Contains(searchString) || s.Genre.Contains(searchString) || s.User.Zip.ToString().Equals(searchString));

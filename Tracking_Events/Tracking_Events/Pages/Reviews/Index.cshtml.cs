@@ -11,9 +11,9 @@ namespace Tracking_Events.Pages.Reviews
 {
     public class IndexModel : PageModel
     {
-        private readonly Tracking_Events.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public IndexModel(Tracking_Events.Data.ApplicationDbContext context)
+        public IndexModel(ApplicationDbContext context)
         {
             _context = context;
         }

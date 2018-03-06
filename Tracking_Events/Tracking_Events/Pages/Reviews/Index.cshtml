@@ -3,7 +3,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
-    ViewData["Title"] = "Anonymous Reviews";
+    ViewData["Title"] = "Reviews";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -17,6 +17,14 @@
         }
     }
 </p>
+<form asp-page="./Index" method="get">
+    <p>
+        Filter by Venue Name Rating:
+        <input type="text" name="searchString" value="@Model.CurrentFilter" />
+        <input type="submit" value="Filter" class="btn btn-default" /> |
+        <a asp-page="./Index">Back to full list</a>
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -48,7 +56,7 @@
                 <td>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.UserName == item.UserName)
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 2 && UserManager.GetUserAsync(User).Result.UserName == item.UserName)
                         {
                             <a asp-page="./Edit" asp-route-id="@item.ReviewID">Edit</a>
                             <span> | </span>
