@@ -20,7 +20,7 @@ namespace Tracking_Events.Pages.Events
 
         public IList<Event> Event { get; set; }
 
-        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
         public string CurrentSearch { get; set; }
 
         #region Sorting Purposes
@@ -36,7 +36,7 @@ namespace Tracking_Events.Pages.Events
             VenueNameSort = sortOrder == "Venue" ? "venue_desc" : "Venue";
             StartTimeSort = sortOrder == "Starttime" ? "start_time_desc" : "Starttime";
             EndTimeSort = sortOrder == "Endtime" ? "end_time_desc" : "Endtime";
-            CurrentFilter = sortOrder;
+            CurrentSort = sortOrder;
             
             //Delete Events 3 hours past end time
             _context.Event.RemoveRange(_context.Event.Where(e => e.EndTime < DateTime.Now.AddHours(3)));
