@@ -137,12 +137,6 @@ namespace Tracking_Events.Migrations
 
                     b.Property<int>("AccountType");
 
-                    b.Property<string>("Address")
-                        .IsRequired();
-
-                    b.Property<string>("City")
-                        .IsRequired();
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -169,17 +163,10 @@ namespace Tracking_Events.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<string>("State")
-                        .IsRequired();
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
-
-                    b.Property<string>("VenueName");
-
-                    b.Property<int>("Zip");
 
                     b.HasKey("Id");
 
@@ -213,11 +200,11 @@ namespace Tracking_Events.Migrations
 
                     b.Property<DateTime>("StartTime");
 
-                    b.Property<string>("UserId");
+                    b.Property<int?>("VenueID");
 
                     b.HasKey("EventID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("VenueID");
 
                     b.ToTable("Event");
                 });
@@ -234,13 +221,42 @@ namespace Tracking_Events.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.Property<string>("VenueId");
+                    b.Property<int?>("VenueID");
 
                     b.HasKey("ReviewID");
 
-                    b.HasIndex("VenueId");
+                    b.HasIndex("VenueID");
 
                     b.ToTable("Review");
+                });
+
+            modelBuilder.Entity("Tracking_Events.Data.Venue", b =>
+                {
+                    b.Property<int>("VenueID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .IsRequired();
+
+                    b.Property<string>("City")
+                        .IsRequired();
+
+                    b.Property<string>("State")
+                        .IsRequired();
+
+                    b.Property<string>("UserID");
+
+                    b.Property<string>("VenueName");
+
+                    b.Property<int>("Zip");
+
+                    b.HasKey("VenueID");
+
+                    b.HasIndex("UserID")
+                        .IsUnique()
+                        .HasFilter("[UserID] IS NOT NULL");
+
+                    b.ToTable("Venue");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -290,17 +306,25 @@ namespace Tracking_Events.Migrations
 
             modelBuilder.Entity("Tracking_Events.Data.Event", b =>
                 {
-                    b.HasOne("Tracking_Events.Data.ApplicationUser", "User")
+                    b.HasOne("Tracking_Events.Data.Venue", "Venue")
                         .WithMany("Events")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("VenueID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Tracking_Events.Data.Review", b =>
                 {
-                    b.HasOne("Tracking_Events.Data.ApplicationUser", "Venue")
-                        .WithMany("VenueReviews")
-                        .HasForeignKey("VenueId")
+                    b.HasOne("Tracking_Events.Data.Venue", "Venue")
+                        .WithMany("Reviews")
+                        .HasForeignKey("VenueID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Tracking_Events.Data.Venue", b =>
+                {
+                    b.HasOne("Tracking_Events.Data.ApplicationUser", "User")
+                        .WithOne("Venue")
+                        .HasForeignKey("Tracking_Events.Data.Venue", "UserID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

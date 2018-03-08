@@ -37,10 +37,6 @@ namespace Tracking_Events.Data
                 {
                     UserName = "admin@admin.com",
                     Email = "admin@admin.com",
-                    Address = "N/A",
-                    City = "N/A",
-                    State = "N/A",
-                    Zip = 0,
                     AccountType = 0
                 };
 

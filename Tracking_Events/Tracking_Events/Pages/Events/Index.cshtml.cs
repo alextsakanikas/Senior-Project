@@ -42,13 +42,14 @@ namespace Tracking_Events.Pages.Events
             _context.Event.RemoveRange(_context.Event.Where(e => e.EndTime < DateTime.Now.AddHours(3)));
             await _context.SaveChangesAsync();
 
-            IQueryable<Event> events = _context.Event.Include(ev => ev.User).AsQueryable();
+            //Used to get Parent and Foreign tables
+            IQueryable<Event> events = _context.Event.Include(ev => ev.Venue).AsQueryable();
 
             #region Filtering
             CurrentSearch = searchString;
             if (!String.IsNullOrEmpty(searchString))
             {
-                events = events.Where(s => s.User.VenueName.Contains(searchString) || s.Genre.Contains(searchString) || s.User.Zip.ToString().Equals(searchString));
+                events = events.Where(s => s.Venue.VenueName.Contains(searchString) || s.Genre.Contains(searchString) || s.Venue.Zip.ToString().Equals(searchString));
             }
             #endregion
 
@@ -58,10 +59,10 @@ namespace Tracking_Events.Pages.Events
                     events = events.OrderByDescending(s => s.EventName);
                     break;
                 case "Venue":
-                    events = events.OrderBy(s => s.User.VenueName);
+                    events = events.OrderBy(s => s.Venue.VenueName);
                     break;
                 case "venue_desc":
-                    events = events.OrderByDescending(s => s.User.VenueName);
+                    events = events.OrderByDescending(s => s.Venue.VenueName);
                     break;
                 case "Starttime":
                     events = events.OrderBy(s => s.StartTime);
@@ -80,7 +81,6 @@ namespace Tracking_Events.Pages.Events
                     break;
             }
 
-            //Used to get Parent and Foreign tables
             Event = await events.AsNoTracking().ToListAsync();
         }
     }

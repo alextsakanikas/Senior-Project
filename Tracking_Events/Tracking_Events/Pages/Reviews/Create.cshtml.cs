@@ -20,8 +20,7 @@ namespace Tracking_Events.Pages.Reviews
 
         public IActionResult OnGet()
         {
-            var venuelist = (from s in _context.ApplicationUser
-                             where s.AccountType == 1
+            var venuelist = (from s in _context.Venue
                              select s).Distinct();
             VenueNames = venuelist.Select(v => new SelectListItem() { Value = v.VenueName, Text = v.VenueName });
             return Page();
@@ -41,7 +40,7 @@ namespace Tracking_Events.Pages.Reviews
                 return Page();
             }
 
-            Review.Venue = _context.ApplicationUser.SingleOrDefault(a => a.VenueName == VenueName);
+            Review.Venue = _context.Venue.SingleOrDefault(v => v.VenueName == VenueName);
             Review.UserName = User.Identity.Name;
 
             _context.Review.Add(Review);

@@ -57,25 +57,6 @@ namespace Tracking_Events.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Display(Name = "Venue Name (If Applicable)")]
-            public string VenueName { get; set; }
-
-            [Required]
-            [Display(Name = "Address")]
-            public string Address { get; set; }
-
-            [Required]
-            [Display(Name = "City")]
-            public string City { get; set; }
-
-            [Required]
-            [Display(Name = "State")]
-            public string State { get; set; }
-
-            [Required]
-            [Display(Name = "Zip")]
-            public int Zip { get; set; }
-
             [Required]
             [Display(Name = "Account Type")]
             public AccountType AccountType { get; set; }
@@ -96,26 +77,20 @@ namespace Tracking_Events.Pages.Account
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                ApplicationUser user;
-                if (String.IsNullOrEmpty(Input.VenueName))
-                {
-                    user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Address = capitalize.ToTitleCase(Input.Address), City = capitalize.ToTitleCase(Input.City), State = Input.State.ToUpper(), Zip = Input.Zip, AccountType = (int)Input.AccountType };
-                }
-                else
-                {
-                    user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, VenueName = capitalize.ToTitleCase(Input.VenueName), Address = capitalize.ToTitleCase(Input.Address), City = capitalize.ToTitleCase(Input.City), State = Input.State.ToUpper(), Zip = Input.Zip, AccountType = (int)Input.AccountType };
-                }
-
+                ApplicationUser user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, AccountType = (int)Input.AccountType };
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    //await _emailSender.SendEmailConfirmationAsync(Input.Email, callbackUrl);
-
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    if (Input.AccountType == AccountType.Venue)
+                    {
+                        return RedirectToPage("./RegisterVenue");
+                    }
+
                     return LocalRedirect(Url.GetLocalUrl(returnUrl));
                 }
                 foreach (var error in result.Errors)

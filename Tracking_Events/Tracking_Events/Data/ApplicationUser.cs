@@ -11,6 +11,16 @@ namespace Tracking_Events.Data
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public int AccountType { get; set; }
+
+        public Venue Venue { get; set; }
+    }
+
+    public class Venue
+    {
+        [Key]
+        public int VenueID { get; set; }
+
         [Required]
         [Display(Name = "Address")]
         public string Address { get; set; }
@@ -26,14 +36,17 @@ namespace Tracking_Events.Data
         [Required]
         [Display(Name = "Zip")]
         public int Zip { get; set; }
-
-        public int AccountType { get; set; }
-
+        
         [Display(Name = "Venue Name")]
         public string VenueName { get; set; }
+
+        //Foreign Key
+        public string UserID { get; set; }
+        public ApplicationUser User { get; set; }
+
         public List<Event> Events { get; set; }
-        
-        public List<Review> VenueReviews { get; set; }
+
+        public List<Review> Reviews { get; set; }
     }
 
     public class Event
@@ -66,8 +79,8 @@ namespace Tracking_Events.Data
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        //Used to reference AspNetUser table where the account is stored
-        public ApplicationUser User { get; set; }
+        //Used to reference Venue table where the account is stored
+        public Venue Venue { get; set; }
     }
 
     public class Review
@@ -78,7 +91,8 @@ namespace Tracking_Events.Data
         [Display(Name = "Reviewer")]
         public string UserName { get; set; }
 
-        public ApplicationUser Venue { get; set; }
+        //Used to reference Venue table where the account is stored
+        public Venue Venue { get; set; }
 
         [Required]
         [Display(Name = "Rating out of 5")]

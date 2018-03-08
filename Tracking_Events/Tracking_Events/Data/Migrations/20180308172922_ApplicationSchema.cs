@@ -30,8 +30,6 @@ namespace Tracking_Events.Migrations
                     Id = table.Column<string>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     AccountType = table.Column<int>(nullable: false),
-                    Address = table.Column<string>(nullable: false),
-                    City = table.Column<string>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
@@ -43,11 +41,8 @@ namespace Tracking_Events.Migrations
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
                     SecurityStamp = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: false),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    VenueName = table.Column<string>(nullable: true),
-                    Zip = table.Column<int>(nullable: false)
+                    UserName = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -161,6 +156,30 @@ namespace Tracking_Events.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Venue",
+                columns: table => new
+                {
+                    VenueID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Address = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: false),
+                    State = table.Column<string>(nullable: false),
+                    UserID = table.Column<string>(nullable: true),
+                    VenueName = table.Column<string>(nullable: true),
+                    Zip = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Venue", x => x.VenueID);
+                    table.ForeignKey(
+                        name: "FK_Venue_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Event",
                 columns: table => new
                 {
@@ -172,16 +191,16 @@ namespace Tracking_Events.Migrations
                     EventName = table.Column<string>(nullable: false),
                     Genre = table.Column<string>(nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    VenueID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Event", x => x.EventID);
                     table.ForeignKey(
-                        name: "FK_Event_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Event_Venue_VenueID",
+                        column: x => x.VenueID,
+                        principalTable: "Venue",
+                        principalColumn: "VenueID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -194,16 +213,16 @@ namespace Tracking_Events.Migrations
                     Description = table.Column<string>(nullable: false),
                     Rating = table.Column<int>(nullable: false),
                     UserName = table.Column<string>(nullable: true),
-                    VenueId = table.Column<string>(nullable: true)
+                    VenueID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Review", x => x.ReviewID);
                     table.ForeignKey(
-                        name: "FK_Review_AspNetUsers_VenueId",
-                        column: x => x.VenueId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Review_Venue_VenueID",
+                        column: x => x.VenueID,
+                        principalTable: "Venue",
+                        principalColumn: "VenueID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -247,14 +266,21 @@ namespace Tracking_Events.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_UserId",
+                name: "IX_Event_VenueID",
                 table: "Event",
-                column: "UserId");
+                column: "VenueID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_VenueId",
+                name: "IX_Review_VenueID",
                 table: "Review",
-                column: "VenueId");
+                column: "VenueID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Venue_UserID",
+                table: "Venue",
+                column: "UserID",
+                unique: true,
+                filter: "[UserID] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -282,6 +308,9 @@ namespace Tracking_Events.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Venue");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

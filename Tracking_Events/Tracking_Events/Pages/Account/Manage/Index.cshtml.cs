@@ -17,6 +17,7 @@ namespace Tracking_Events.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private ApplicationDbContext _context;
         private readonly IEmailSender _emailSender;
         //Used for Capitalization
         private readonly TextInfo capitalize = CultureInfo.CurrentCulture.TextInfo;
@@ -24,10 +25,12 @@ namespace Tracking_Events.Pages.Account.Manage
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
             _emailSender = emailSender;
         }
 
@@ -66,6 +69,8 @@ namespace Tracking_Events.Pages.Account.Manage
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+            var venue = _context.Venue.SingleOrDefault(v => v.UserID == user.Id);
+
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -74,11 +79,11 @@ namespace Tracking_Events.Pages.Account.Manage
             Input = new InputModel
             {
                 Email = user.Email,
-                VenueName = user.VenueName,
-                Address = user.Address,
-                City = user.City,
-                State = user.State,
-                Zip = user.Zip
+                VenueName = venue.VenueName,
+                Address = venue.Address,
+                City = venue.City,
+                State = venue.State,
+                Zip = venue.Zip
             };
 
             return Page();
@@ -92,6 +97,8 @@ namespace Tracking_Events.Pages.Account.Manage
             }
 
             var user = await _userManager.GetUserAsync(User);
+            var venue = _context.Venue.SingleOrDefault(v => v.UserID == user.Id);
+
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -107,14 +114,19 @@ namespace Tracking_Events.Pages.Account.Manage
                 }
             }
 
-            if (Input.VenueName != user.VenueName || Input.Address != user.Address || Input.City != user.City || Input.State != user.State || Input.Zip != user.Zip)
+            if (Input.VenueName != user.Venue.VenueName || Input.Address != user.Venue.Address || Input.City != user.Venue.City || Input.State != user.Venue.State || Input.Zip != user.Venue.Zip)
             {
-                user.VenueName = capitalize.ToTitleCase(Input.VenueName);
-                user.Address = capitalize.ToTitleCase(Input.Address);
-                user.City = capitalize.ToTitleCase(Input.City);
-                user.State = Input.State.ToUpper();
-                user.Zip = Input.Zip;
+                venue.VenueName = capitalize.ToTitleCase(Input.VenueName);
+                venue.Address = capitalize.ToTitleCase(Input.Address);
+                venue.City = capitalize.ToTitleCase(Input.City);
+                venue.State = Input.State.ToUpper();
+                venue.Zip = Input.Zip;
+
                 var result = await _userManager.UpdateAsync(user);
+
+                //Update Venue
+                _context.Attach(venue).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
                 if (!result.Succeeded)
                 {
                     throw new ApplicationException($"Unexpected error occured Updating for user with ID '{user.Id}'.");

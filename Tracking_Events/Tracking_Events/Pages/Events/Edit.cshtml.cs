@@ -33,7 +33,7 @@ namespace Tracking_Events.Pages.Events
             }
 
             //Used to get Parent and Foreign tables
-            Event = _context.Event.Include(ev => ev.User).Where(e => e.EventID == Convert.ToInt32(id)).FirstOrDefault();
+            Event = _context.Event.Include(ev => ev.Venue).Where(e => e.EventID == Convert.ToInt32(id)).FirstOrDefault();
 
             if (Event == null)
             {

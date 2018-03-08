@@ -39,7 +39,9 @@ namespace Tracking_Events.Pages.Events
                 return Page();
             }
 
-            Event.User = _userManager.GetUserAsync(User).Result;
+            var user = _context.ApplicationUser.SingleOrDefault(u => u.Id == _userManager.GetUserAsync(User).Result.Id);
+            
+            Event.Venue = _context.Venue.SingleOrDefault(v => v.User.Id == user.Id);
             Event.EventName = capitalize.ToTitleCase(Event.EventName);
             Event.Genre = capitalize.ToTitleCase(Event.Genre);
 

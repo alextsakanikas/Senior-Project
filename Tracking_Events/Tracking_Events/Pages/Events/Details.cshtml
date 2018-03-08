@@ -12,10 +12,10 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Event.User.VenueName)
+            @Html.DisplayNameFor(model => model.Event.Venue.VenueName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Event.User.VenueName)
+            @Html.DisplayFor(model => model.Event.Venue.VenueName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Event.EventName)
@@ -56,35 +56,35 @@
             <br />
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Event.User.Address)
+            @Html.DisplayNameFor(model => model.Event.Venue.Address)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Event.User.Address)
+            @Html.DisplayFor(model => model.Event.Venue.Address)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Event.User.City)
+            @Html.DisplayNameFor(model => model.Event.Venue.City)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Event.User.City)
+            @Html.DisplayFor(model => model.Event.Venue.City)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Event.User.State)
+            @Html.DisplayNameFor(model => model.Event.Venue.State)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Event.User.State)
+            @Html.DisplayFor(model => model.Event.Venue.State)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Event.User.Zip)
+            @Html.DisplayNameFor(model => model.Event.Venue.Zip)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Event.User.Zip)
+            @Html.DisplayFor(model => model.Event.Venue.Zip)
         </dd>
     </dl>
 </div>
 <div>
     @if (SignInManager.IsSignedIn(User))
     {
-        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == Model.Event.User.Id)
+        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == Model.Event.Venue.User.Id)
         {
             <a asp-page="./Edit" asp-route-id="@Model.Event.EventID">Edit Event</a> <span> | </span>
         }

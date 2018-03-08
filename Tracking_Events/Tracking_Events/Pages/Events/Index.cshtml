@@ -30,7 +30,7 @@
         <tr>
             <th>
                 <a asp-page="./Index" asp-route-sortOrder="@Model.VenueNameSort" asp-route-searchString="@Model.CurrentSearch">
-                    @Html.DisplayNameFor(model => model.Event[0].User.VenueName)
+                    @Html.DisplayNameFor(model => model.Event[0].Venue.VenueName)
                 </a>
             </th>
             <th>
@@ -55,16 +55,16 @@
                 </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].User.Address)
+                @Html.DisplayNameFor(model => model.Event[0].Venue.Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].User.City)
+                @Html.DisplayNameFor(model => model.Event[0].Venue.City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].User.State)
+                @Html.DisplayNameFor(model => model.Event[0].Venue.State)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].User.Zip)
+                @Html.DisplayNameFor(model => model.Event[0].Venue.Zip)
             </th>
             <th></th>
         </tr>
@@ -74,7 +74,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.VenueName)
+                    @Html.DisplayFor(modelItem => item.Venue.VenueName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EventName)
@@ -92,26 +92,26 @@
                     @Html.DisplayFor(modelItem => item.EndTime)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.Address)
+                    @Html.DisplayFor(modelItem => item.Venue.Address)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.City)
+                    @Html.DisplayFor(modelItem => item.Venue.City)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.State)
+                    @Html.DisplayFor(modelItem => item.Venue.State)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.Zip)
+                    @Html.DisplayFor(modelItem => item.Venue.Zip)
                 </td>
                 <td>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == item.User.Id)
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == item.Venue.UserID)
                         {
                             <a asp-page="./Edit" asp-route-id="@item.EventID">Edit</a>
                             <span> | </span>
                         }
-                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == item.User.Id || UserManager.GetUserAsync(User).Result.AccountType == 0)
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == item.Venue.UserID || UserManager.GetUserAsync(User).Result.AccountType == 0)
                         {
                             <a asp-page="./Delete" asp-route-id="@item.EventID">Delete</a>
                             <span> | </span>
