@@ -19,7 +19,7 @@
 </p>
 <form asp-page="./Index" method="get" asp-route-sortOrder="@Model.CurrentSort">
     <p>
-        Filter by <b>Venue Name</b> or <b>Rating</b>:
+        Filter by <b style="color:red">Venue Name</b> or <b style="color:red">Rating</b>:
         <input type="text" name="searchString" />
         <input type="submit" value="Filter" class="btn btn-default" /> |
         <a asp-page="./Index">Back to full list</a>
