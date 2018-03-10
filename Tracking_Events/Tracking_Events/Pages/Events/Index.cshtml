@@ -22,13 +22,13 @@
     <p>
         Filter by <b style="color:red">Venue Name</b> or <b style="color:red">Genre</b> or <b style="color:red">Zip</b>:
         <input type="text" name="searchString" />
-        <input type="submit" value="Filter" class="btn btn-default" /> |
+        <input type="submit" value="Filter" class="btn btn-info btn-sm" /> |
         <a asp-page="./Index">Back to full list</a>
     </p>
 </form>
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
-        <tr>
+        <tr class="info">
             <th>
                 <a asp-page="./Index" asp-route-sortOrder="@Model.VenueNameSort" asp-route-searchString="@Model.CurrentSearch">
                     @Html.DisplayNameFor(model => model.Event[0].Venue.VenueName)

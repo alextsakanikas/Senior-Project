@@ -47,23 +47,23 @@ namespace Tracking_Events.Pages.Account.Manage
             public string Email { get; set; }
 
             [Display(Name = "Venue Name")]
-            public string VenueName { get; set; }
+            public string VenueName { get; set; } = "N/A";
 
             [Required]
             [Display(Name = "Address")]
-            public string Address { get; set; }
+            public string Address { get; set; } = "N/A";
 
             [Required]
             [Display(Name = "City")]
-            public string City { get; set; }
+            public string City { get; set; } = "N/A";
 
             [Required]
             [Display(Name = "State")]
-            public string State { get; set; }
+            public string State { get; set; } = "N/A";
 
             [Required]
             [Display(Name = "Zip")]
-            public int Zip { get; set; }
+            public int Zip { get; set; } = 0;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -76,15 +76,25 @@ namespace Tracking_Events.Pages.Account.Manage
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            Input = new InputModel
+            if (user.AccountType == 0)
             {
-                Email = user.Email,
-                VenueName = venue.VenueName,
-                Address = venue.Address,
-                City = venue.City,
-                State = venue.State,
-                Zip = venue.Zip
-            };
+                Input = new InputModel
+                {
+                    Email = user.Email
+                };
+            }
+            else
+            {
+                Input = new InputModel
+                {
+                    Email = user.Email,
+                    VenueName = venue.VenueName,
+                    Address = venue.Address,
+                    City = venue.City,
+                    State = venue.State,
+                    Zip = venue.Zip
+                };
+            }
 
             return Page();
         }

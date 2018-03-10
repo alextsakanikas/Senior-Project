@@ -4,10 +4,10 @@
     ViewData["Title"] = "Delete Confirmation";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2 class="text-warning">@ViewData["Title"]</h2>
 
-<p>Are your sure you want to delete your account?</p>
+<p class="text-warning">Are your sure you want to delete your account?</p>
 <form method="post">
     <button type="submit" asp-route-confirm="yes" class="btn btn-danger">Yes</button>
-    <button type="submit" asp-route-confirm="no" class="btn btn-default">No</button>
+    <button type="submit" asp-route-confirm="no" class="btn btn-success">No</button>
 </form>
