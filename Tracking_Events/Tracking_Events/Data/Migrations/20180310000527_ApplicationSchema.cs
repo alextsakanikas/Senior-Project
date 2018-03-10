@@ -205,6 +205,31 @@ namespace Tracking_Events.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Request",
+                columns: table => new
+                {
+                    RequestID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AgeRequirement = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    EndTime = table.Column<DateTime>(nullable: false),
+                    EventName = table.Column<string>(nullable: false),
+                    Genre = table.Column<string>(nullable: false),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    VenueID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Request", x => x.RequestID);
+                    table.ForeignKey(
+                        name: "FK_Request_Venue_VenueID",
+                        column: x => x.VenueID,
+                        principalTable: "Venue",
+                        principalColumn: "VenueID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Review",
                 columns: table => new
                 {
@@ -271,6 +296,11 @@ namespace Tracking_Events.Migrations
                 column: "VenueID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Request_VenueID",
+                table: "Request",
+                column: "VenueID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Review_VenueID",
                 table: "Review",
                 column: "VenueID");
@@ -302,6 +332,9 @@ namespace Tracking_Events.Migrations
 
             migrationBuilder.DropTable(
                 name: "Event");
+
+            migrationBuilder.DropTable(
+                name: "Request");
 
             migrationBuilder.DropTable(
                 name: "Review");

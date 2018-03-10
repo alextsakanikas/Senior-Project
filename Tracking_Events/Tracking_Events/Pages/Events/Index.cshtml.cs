@@ -18,6 +18,9 @@ namespace Tracking_Events.Pages.Events
             _context = context;
         }
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public IList<Event> Event { get; set; }
 
         public string CurrentSort { get; set; }
@@ -30,14 +33,16 @@ namespace Tracking_Events.Pages.Events
         public string EndTimeSort { get; set; }
         #endregion
 
-        public async Task OnGetAsync(string sortOrder, string searchString)
+        public async Task OnGetAsync(string sortOrder, string searchString, string statusMessage)
         {
             EventNameSort = String.IsNullOrEmpty(sortOrder) ? "event_name_desc" : "";
             VenueNameSort = sortOrder == "Venue" ? "venue_desc" : "Venue";
             StartTimeSort = sortOrder == "Starttime" ? "start_time_desc" : "Starttime";
             EndTimeSort = sortOrder == "Endtime" ? "end_time_desc" : "Endtime";
             CurrentSort = sortOrder;
-            
+
+            StatusMessage = statusMessage;
+
             //Delete Events 3 hours past end time
             _context.Event.RemoveRange(_context.Event.Where(e => e.EndTime < DateTime.Now.AddHours(3)));
             await _context.SaveChangesAsync();

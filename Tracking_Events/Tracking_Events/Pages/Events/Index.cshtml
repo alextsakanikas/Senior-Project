@@ -7,6 +7,7 @@
 }
 
 <h2>@ViewData["Title"]</h2>
+@Html.Partial("./Account/Manage/_StatusMessage", Model.StatusMessage)
 
 <p>
     @if (SignInManager.IsSignedIn(User))

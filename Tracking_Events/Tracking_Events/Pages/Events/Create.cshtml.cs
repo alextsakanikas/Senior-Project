@@ -30,7 +30,7 @@ namespace Tracking_Events.Pages.Events
         }
 
         [BindProperty]
-        public Event Event { get; set; }
+        public Request Request { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -41,14 +41,14 @@ namespace Tracking_Events.Pages.Events
 
             var user = _context.ApplicationUser.SingleOrDefault(u => u.Id == _userManager.GetUserAsync(User).Result.Id);
             
-            Event.Venue = _context.Venue.SingleOrDefault(v => v.User.Id == user.Id);
-            Event.EventName = capitalize.ToTitleCase(Event.EventName);
-            Event.Genre = capitalize.ToTitleCase(Event.Genre);
+            Request.Venue = _context.Venue.SingleOrDefault(v => v.User.Id == user.Id);
+            Request.EventName = capitalize.ToTitleCase(Request.EventName);
+            Request.Genre = capitalize.ToTitleCase(Request.Genre);
 
-            _context.Event.Add(Event);
+            _context.Request.Add(Request);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { statusMessage = "Please wait for Admin Approval" });
         }
     }
 }

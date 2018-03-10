@@ -40,13 +40,49 @@ namespace Tracking_Events.Data
         [Display(Name = "Venue Name")]
         public string VenueName { get; set; }
 
-        //Foreign Key
+        //Foreign Key for One to one
         public string UserID { get; set; }
         public ApplicationUser User { get; set; }
+
+        public List<Request> Requests { get; set; }
 
         public List<Event> Events { get; set; }
 
         public List<Review> Reviews { get; set; }
+    }
+
+    public class Request
+    {
+        [Key]
+        public int RequestID { get; set; }
+
+        [Required]
+        [Display(Name = "Event Name")]
+        public string EventName { get; set; }
+
+        [Required]
+        [Display(Name = "Genre")]
+        public string Genre { get; set; }
+
+        [Required]
+        [Display(Name = "Age Requirement")]
+        public int AgeRequirement { get; set; }
+
+        [Required]
+        [Display(Name = "Start Time")]
+        [DisplayFormat(DataFormatString = "{0:g}")]
+        public DateTime StartTime { get; set; }
+
+        [Required]
+        [Display(Name = "End Time")]
+        [DisplayFormat(DataFormatString = "{0:g}")]
+        public DateTime EndTime { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        //Used to reference Venue table where the account is stored
+        public Venue Venue { get; set; }
     }
 
     public class Event

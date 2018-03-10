@@ -5,7 +5,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>@ViewData["Title"]</h2>
 
 <h4>Event</h4>
 <hr />
@@ -14,34 +14,34 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Event.EventName" class="control-label"></label>
-                <input style="text-transform:capitalize" asp-for="Event.EventName" class="form-control" />
-                <span asp-validation-for="Event.EventName" class="text-danger"></span>
+                <label asp-for="Request.EventName" class="control-label"></label>
+                <input style="text-transform:capitalize" asp-for="Request.EventName" class="form-control" />
+                <span asp-validation-for="Request.EventName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Event.Genre" class="control-label"></label>
-                <input style="text-transform:capitalize" asp-for="Event.Genre" class="form-control" />
-                <span asp-validation-for="Event.Genre" class="text-danger"></span>
+                <label asp-for="Request.Genre" class="control-label"></label>
+                <input style="text-transform:capitalize" asp-for="Request.Genre" class="form-control" />
+                <span asp-validation-for="Request.Genre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Event.AgeRequirement" class="control-label"></label>
-                <input asp-for="Event.AgeRequirement" class="form-control" />
-                <span asp-validation-for="Event.AgeRequirement" class="text-danger"></span>
+                <label asp-for="Request.AgeRequirement" class="control-label"></label>
+                <input asp-for="Request.AgeRequirement" class="form-control" />
+                <span asp-validation-for="Request.AgeRequirement" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Event.StartTime" class="control-label"></label>
-                <input type="datetime-local" asp-for="Event.StartTime" class="form-control" />
-                <span asp-validation-for="Event.StartTime" class="text-danger"></span>
+                <label asp-for="Request.StartTime" class="control-label"></label>
+                <input type="datetime-local" asp-for="Request.StartTime" class="form-control" />
+                <span asp-validation-for="Request.StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Event.EndTime" class="control-label"></label>
-                <input type="datetime-local" asp-for="Event.EndTime" class="form-control" />
-                <span asp-validation-for="Event.EndTime" class="text-danger"></span>
+                <label asp-for="Request.EndTime" class="control-label"></label>
+                <input type="datetime-local" asp-for="Request.EndTime" class="form-control" />
+                <span asp-validation-for="Request.EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Event.Description" class="control-label"></label>
-                <textarea asp-for="Event.Description" class="form-control"></textarea>
-                <span asp-validation-for="Event.Description" class="text-danger"></span>
+                <label asp-for="Request.Description" class="control-label"></label>
+                <textarea asp-for="Request.Description" class="form-control"></textarea>
+                <span asp-validation-for="Request.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

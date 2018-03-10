@@ -1,0 +1,71 @@
+﻿@page
+@model Tracking_Events.Pages.Requests.IndexModel
+
+@{
+    ViewData["Title"] = "Event Requests";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].Venue.VenueName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].EventName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].AgeRequirement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Requests)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Venue.VenueName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AgeRequirement)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <form method="post">
+                        <button type="submit" class="btn btn-link btn-xs" asp-route-id="@item.RequestID" asp-route-judgement="Approve">Approve</button> |
+                        <button type="submit" class="btn btn-link btn-xs" asp-route-id="@item.RequestID" asp-route-judgement="Reject">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

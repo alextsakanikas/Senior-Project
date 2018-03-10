@@ -11,7 +11,7 @@ using Tracking_Events.Data;
 namespace Tracking_Events.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180308172922_ApplicationSchema")]
+    [Migration("20180310000527_ApplicationSchema")]
     partial class ApplicationSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -210,6 +210,34 @@ namespace Tracking_Events.Migrations
                     b.ToTable("Event");
                 });
 
+            modelBuilder.Entity("Tracking_Events.Data.Request", b =>
+                {
+                    b.Property<int>("RequestID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AgeRequirement");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("EndTime");
+
+                    b.Property<string>("EventName")
+                        .IsRequired();
+
+                    b.Property<string>("Genre")
+                        .IsRequired();
+
+                    b.Property<DateTime>("StartTime");
+
+                    b.Property<int?>("VenueID");
+
+                    b.HasKey("RequestID");
+
+                    b.HasIndex("VenueID");
+
+                    b.ToTable("Request");
+                });
+
             modelBuilder.Entity("Tracking_Events.Data.Review", b =>
                 {
                     b.Property<int>("ReviewID")
@@ -309,6 +337,14 @@ namespace Tracking_Events.Migrations
                 {
                     b.HasOne("Tracking_Events.Data.Venue", "Venue")
                         .WithMany("Events")
+                        .HasForeignKey("VenueID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Tracking_Events.Data.Request", b =>
+                {
+                    b.HasOne("Tracking_Events.Data.Venue", "Venue")
+                        .WithMany("Requests")
                         .HasForeignKey("VenueID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -23,6 +23,8 @@ namespace Tracking_Events.Data
 
             builder.Entity<ApplicationUser>().HasOne(a => a.Venue).WithOne(v => v.User).HasForeignKey<Venue>(v => v.UserID).OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<Request>().HasOne(r => r.Venue).WithMany(v => v.Requests).OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<Event>().HasOne(e => e.Venue).WithMany(v => v.Events).OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Review>().HasOne(r => r.Venue).WithMany(v => v.Reviews).OnDelete(DeleteBehavior.Cascade);
@@ -30,6 +32,7 @@ namespace Tracking_Events.Data
 
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Venue> Venue { get; set; }
+        public DbSet<Request> Request { get; set; }
         public DbSet<Event> Event { get; set; }
         public DbSet<Review> Review { get; set; }
     }
