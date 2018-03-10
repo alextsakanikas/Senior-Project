@@ -37,7 +37,7 @@
                     <li><a asp-page="/Reviews/Index">Reviews</a></li>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        @if (UserManager.GetUserAsync(User).Result.AccountType == 0)
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 0 || UserManager.GetUserAsync(User).Result.AccountType == 1)
                         {
                             <li><a asp-page="/Requests/Index">Requests</a></li>
                         }

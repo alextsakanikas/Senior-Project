@@ -216,6 +216,7 @@ namespace Tracking_Events.Migrations
                     EventName = table.Column<string>(nullable: false),
                     Genre = table.Column<string>(nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<string>(nullable: true),
                     VenueID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

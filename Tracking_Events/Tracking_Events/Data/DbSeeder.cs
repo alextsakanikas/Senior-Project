@@ -12,7 +12,7 @@ namespace Tracking_Events.Data
     public class DbSeeder
     {
         private UserManager<ApplicationUser> _userManager;
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public DbSeeder(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {

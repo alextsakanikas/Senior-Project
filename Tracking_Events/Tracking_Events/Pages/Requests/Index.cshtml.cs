@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,19 +13,30 @@ namespace Tracking_Events.Pages.Requests
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Request> Requests { get; set; }
 
         public async Task OnGetAsync()
         {
-            var requests = _context.Request.Include(r => r.Venue).AsQueryable();
+            var user = _userManager.GetUserAsync(User).Result;
 
-            Requests = await requests.AsNoTracking().ToListAsync();
+            if (user.AccountType == 0)
+            {
+                var requests = _context.Request.Include(r => r.Venue).Where(r => r.Status.Equals("Waiting Approval")).AsQueryable();
+                Requests = await requests.AsNoTracking().ToListAsync();
+            }
+            else if (user.AccountType == 1)
+            {
+                var requests = _context.Request.Include(r => r.Venue).Where(r => r.Venue.UserID == user.Id).AsQueryable();
+                Requests = await requests.AsNoTracking().ToListAsync();
+            }
         }
 
         public async Task<IActionResult> OnPostAsync(int id, string judgement)
@@ -41,16 +53,22 @@ namespace Tracking_Events.Pages.Requests
                     AgeRequirement = request.AgeRequirement,
                     StartTime = request.StartTime,
                     EndTime = request.EndTime,
-                    Description = request.Description
+                    Description = request.Description,
                 };
 
+                request.Status = "Approved";
+
                 await _context.Event.AddAsync(Event);
-                _context.Request.Remove(request);
+                _context.Attach(request).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
             }
             else if (judgement.Equals("Reject"))
             {
-                _context.Request.Remove(request);
+                request.Status = "Rejected";
+
+                _context.Attach(request).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
             }
 

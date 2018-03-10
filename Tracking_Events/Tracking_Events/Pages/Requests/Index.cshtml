@@ -1,6 +1,6 @@
 ﻿@page
 @model Tracking_Events.Pages.Requests.IndexModel
-
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Event Requests";
 }
@@ -31,6 +31,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Requests[0].Description)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].Status)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -60,10 +63,16 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <form method="post">
-                        <button type="submit" class="btn btn-link btn-xs" asp-route-id="@item.RequestID" asp-route-judgement="Approve">Approve</button> |
-                        <button type="submit" class="btn btn-link btn-xs" asp-route-id="@item.RequestID" asp-route-judgement="Reject">Reject</button>
-                    </form>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @if (UserManager.GetUserAsync(User).Result.AccountType == 0)
+                    {
+                        <form method="post">
+                            <button type="submit" class="btn btn-link btn-xs" asp-route-id="@item.RequestID" asp-route-judgement="Approve">Approve</button> |
+                            <button type="submit" class="btn btn-link btn-xs" asp-route-id="@item.RequestID" asp-route-judgement="Reject">Reject</button>
+                        </form>
+                    }
                 </td>
             </tr>
         }

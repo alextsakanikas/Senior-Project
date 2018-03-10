@@ -81,6 +81,9 @@ namespace Tracking_Events.Data
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Display(Name = "Approval Status")]
+        public string Status { get; set; } = "Waiting Approval";
+
         //Used to reference Venue table where the account is stored
         public Venue Venue { get; set; }
     }

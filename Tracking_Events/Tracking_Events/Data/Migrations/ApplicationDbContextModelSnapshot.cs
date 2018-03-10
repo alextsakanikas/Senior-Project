@@ -228,6 +228,8 @@ namespace Tracking_Events.Migrations
 
                     b.Property<DateTime>("StartTime");
 
+                    b.Property<string>("Status");
+
                     b.Property<int?>("VenueID");
 
                     b.HasKey("RequestID");

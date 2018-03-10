@@ -11,7 +11,7 @@ using Tracking_Events.Data;
 namespace Tracking_Events.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180310000527_ApplicationSchema")]
+    [Migration("20180310042911_ApplicationSchema")]
     partial class ApplicationSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -228,6 +228,8 @@ namespace Tracking_Events.Migrations
                         .IsRequired();
 
                     b.Property<DateTime>("StartTime");
+
+                    b.Property<string>("Status");
 
                     b.Property<int?>("VenueID");
 

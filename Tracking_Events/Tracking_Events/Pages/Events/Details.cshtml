@@ -8,78 +8,80 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Venue.VenueName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.Venue.VenueName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.EventName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.EventName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Genre)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.Genre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.AgeRequirement)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.AgeRequirement)+
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.StartTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.StartTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.EndTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.EndTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.Description)
-            <br />
-            <br />
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Venue.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.Venue.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Venue.City)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.Venue.City)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Venue.State)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.Venue.State)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Venue.Zip)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Event.Venue.Zip)
-        </dd>
-    </dl>
+<div class="row">
+    <div class="col-md-6">
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Venue.VenueName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.Venue.VenueName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.EventName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.EventName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Genre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.Genre)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.AgeRequirement)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.AgeRequirement)+
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.StartTime)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.StartTime)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.EndTime)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.EndTime)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.Description)
+                <br />
+                <br />
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Venue.Address)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.Venue.Address)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Venue.City)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.Venue.City)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Venue.State)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.Venue.State)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Venue.Zip)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.Venue.Zip)
+            </dd>
+        </dl>
+    </div>
 </div>
 <div>
     @if (SignInManager.IsSignedIn(User))
