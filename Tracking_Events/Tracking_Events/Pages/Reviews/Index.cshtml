@@ -65,7 +65,7 @@
                             <a asp-page="./Edit" asp-route-id="@item.ReviewID">Edit</a>
                             <span> | </span>
                         }
-                        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.UserName == item.UserName || UserManager.GetUserAsync(User).Result.AccountType == 0)
+                        @if (UserManager.GetUserAsync(User).Result.AccountType == 2 && UserManager.GetUserAsync(User).Result.UserName == item.UserName || UserManager.GetUserAsync(User).Result.AccountType == 0)
                         {
                             <a asp-page="./Delete" asp-route-id="@item.ReviewID">Delete</a>
                             <span> | </span>
