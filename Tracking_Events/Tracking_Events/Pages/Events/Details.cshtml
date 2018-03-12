@@ -7,6 +7,86 @@
 }
 
 <h2>@ViewData["Title"]</h2>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvzYPgeeulPJarwP3tpSwNW7UAZV7rJrM&callback=initMap" type="text/javascript"></script>
+<script>
+    var geocoder;
+    var map;
+    var gmarkers = [];
+    var currentMarker;
+
+    //Initializes the map and puts it into an id with 'map'
+    function initMap() {
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+            zoom: 8,
+            center: latlng,
+            mapTypeId: 'roadmap'
+        }
+
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        //Current location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var icon = 'http://maps.google.com/mapfiles/kml/pal3/icon56.png'
+                currentMarker = new google.maps.Marker({
+                    map: map,
+                    position: pos,
+                    icon: icon
+                })
+                map.setCenter(pos);
+            });
+        }
+
+        getlocation();
+    }
+
+    //Used to get an address and set markers
+    function getlocation() {
+        var address = @Html.Raw(Json.Serialize(Model.Event.Venue.Address + " " + Model.Event.Venue.City + " " + Model.Event.Venue.State + " " + Model.Event.Venue.Zip));
+
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == 'OK') {
+                map.setCenter(results[0].geometry.location);
+                map.setZoom(14);
+                deleteMarkers();
+
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+                gmarkers.push(marker);
+                setZoom(map, gmarkers);
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
+    //Used to Delete all map markers
+    function deleteMarkers() {
+        for (var i = 0; i < gmarkers.length; i++)
+        {
+            gmarkers[i].setMap(null);
+        }
+        gmarkers = [];
+    }
+
+    //Fit to all markers
+    function setZoom(map, gmarkers) {
+        var boundbox = new google.maps.LatLngBounds();
+        boundbox.extend(currentMarker.getPosition());
+        for (var i = 0; i < gmarkers.length; i++) {
+            boundbox.extend(gmarkers[i].getPosition());
+        }
+        map.fitBounds(boundbox);
+    }
+</script>
 
 <div class="row">
     <div class="col-md-6">
@@ -81,6 +161,9 @@
                 @Html.DisplayFor(model => model.Event.Venue.Zip)
             </dd>
         </dl>
+    </div>
+    <div class="col-md-6">
+        <div id="map" style="width: auto; height: 400px;"></div>
     </div>
 </div>
 <div>
