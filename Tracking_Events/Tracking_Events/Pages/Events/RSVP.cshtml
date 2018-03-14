@@ -1,0 +1,19 @@
+﻿@page
+@model Tracking_Events.Pages.Events.RSVPModel
+
+@{
+    ViewData["Title"] = "RSVP";
+}
+
+<h2>RSVP</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <p>Thank you for RSVPing!</p>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

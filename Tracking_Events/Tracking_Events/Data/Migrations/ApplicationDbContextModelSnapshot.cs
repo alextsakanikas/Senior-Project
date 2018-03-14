@@ -188,6 +188,8 @@ namespace Tracking_Events.Migrations
 
                     b.Property<int>("AgeRequirement");
 
+                    b.Property<int>("Capacity");
+
                     b.Property<string>("Description");
 
                     b.Property<DateTime>("EndTime");
@@ -215,6 +217,8 @@ namespace Tracking_Events.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AgeRequirement");
+
+                    b.Property<int>("Capacity");
 
                     b.Property<string>("Description");
 
@@ -258,6 +262,24 @@ namespace Tracking_Events.Migrations
                     b.HasIndex("VenueID");
 
                     b.ToTable("Review");
+                });
+
+            modelBuilder.Entity("Tracking_Events.Data.RSVP", b =>
+                {
+                    b.Property<int>("RsvpID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("EventID");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("RsvpID");
+
+                    b.HasIndex("EventID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RSVP");
                 });
 
             modelBuilder.Entity("Tracking_Events.Data.Venue", b =>
@@ -356,6 +378,19 @@ namespace Tracking_Events.Migrations
                         .WithMany("Reviews")
                         .HasForeignKey("VenueID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Tracking_Events.Data.RSVP", b =>
+                {
+                    b.HasOne("Tracking_Events.Data.Event", "Event")
+                        .WithMany("Rsvps")
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Tracking_Events.Data.ApplicationUser", "User")
+                        .WithMany("Rsvps")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Tracking_Events.Data.Venue", b =>

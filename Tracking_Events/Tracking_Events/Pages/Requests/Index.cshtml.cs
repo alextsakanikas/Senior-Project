@@ -53,6 +53,7 @@ namespace Tracking_Events.Pages.Requests
                     AgeRequirement = request.AgeRequirement,
                     StartTime = request.StartTime,
                     EndTime = request.EndTime,
+                    Capacity = request.Capacity,
                     Description = request.Description,
                 };
 

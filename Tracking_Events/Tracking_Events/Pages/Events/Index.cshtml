@@ -56,6 +56,9 @@
                 </a>
             </th>
             <th>
+                RSVP/@Html.DisplayNameFor(model => model.Event[0].Capacity)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Event[0].Venue.Address)
             </th>
             <th>
@@ -93,6 +96,9 @@
                     @Html.DisplayFor(modelItem => item.EndTime)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Rsvps.Count)/@Html.DisplayFor(modelItem => item.Capacity)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Venue.Address)
                 </td>
                 <td>
@@ -119,6 +125,11 @@
                         }
                     }
                     <a asp-page="./Details" asp-route-id="@item.EventID">Details</a>
+                    @if (SignInManager.IsSignedIn(User) && item.Capacity > item.Rsvps.Count)
+                    {
+                        <span> | </span>
+                        <a asp-page="./RSVP" asp-route-id="@item.EventID">RSVP</a>
+                    }
                 </td>
             </tr>
         }

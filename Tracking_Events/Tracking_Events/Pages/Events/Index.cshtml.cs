@@ -48,7 +48,7 @@ namespace Tracking_Events.Pages.Events
             await _context.SaveChangesAsync();
 
             //Used to get Parent and Foreign tables
-            IQueryable<Event> events = _context.Event.Include(ev => ev.Venue).AsQueryable();
+            IQueryable<Event> events = _context.Event.Include(ev => ev.Venue).Include(ev => ev.Rsvps).AsQueryable();
 
             #region Filtering
             CurrentSearch = searchString;

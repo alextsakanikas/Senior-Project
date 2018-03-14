@@ -76,7 +76,7 @@ namespace Tracking_Events.Pages.Account.Manage
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (user.AccountType == 0)
+            if (user.AccountType == 0 || user.AccountType == 2)
             {
                 Input = new InputModel
                 {

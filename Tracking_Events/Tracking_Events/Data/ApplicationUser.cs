@@ -13,7 +13,9 @@ namespace Tracking_Events.Data
     {
         public int AccountType { get; set; }
 
+        //Navigation Properties
         public Venue Venue { get; set; }
+        public List<RSVP> Rsvps { get; set; }
     }
 
     public class Venue
@@ -78,6 +80,10 @@ namespace Tracking_Events.Data
         [DisplayFormat(DataFormatString = "{0:g}")]
         public DateTime EndTime { get; set; }
 
+        [Required]
+        [Display(Name = "Capacity")]
+        public int Capacity { get; set; }
+
         [Display(Name = "Description")]
         public string Description { get; set; }
 
@@ -115,11 +121,18 @@ namespace Tracking_Events.Data
         [DisplayFormat(DataFormatString = "{0:g}")]
         public DateTime EndTime { get; set; }
 
+        [Required]
+        [Display(Name = "Capacity")]
+        public int Capacity { get; set; }
+
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        //Used to reference Venue table where the account is stored
+        //Used to reference and navigate Venue table where the account is stored
         public Venue Venue { get; set; }
+
+        //Navigation property for RSVPs
+        public List<RSVP> Rsvps { get; set; }
     }
 
     public class Review
@@ -141,5 +154,14 @@ namespace Tracking_Events.Data
         [Required]
         [Display(Name = "Feedback")]
         public string Description { get; set; }
+    }
+
+    public class RSVP
+    {
+        [Key]
+        public int RsvpID { get; set; }
+
+        public ApplicationUser User { get; set; }
+        public Event Event { get; set; }
     }
 }

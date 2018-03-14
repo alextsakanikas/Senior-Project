@@ -186,6 +186,7 @@ namespace Tracking_Events.Migrations
                     EventID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AgeRequirement = table.Column<int>(nullable: false),
+                    Capacity = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     EndTime = table.Column<DateTime>(nullable: false),
                     EventName = table.Column<string>(nullable: false),
@@ -211,6 +212,7 @@ namespace Tracking_Events.Migrations
                     RequestID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AgeRequirement = table.Column<int>(nullable: false),
+                    Capacity = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     EndTime = table.Column<DateTime>(nullable: false),
                     EventName = table.Column<string>(nullable: false),
@@ -250,6 +252,32 @@ namespace Tracking_Events.Migrations
                         principalTable: "Venue",
                         principalColumn: "VenueID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RSVP",
+                columns: table => new
+                {
+                    RsvpID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    EventID = table.Column<int>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RSVP", x => x.RsvpID);
+                    table.ForeignKey(
+                        name: "FK_RSVP_Event_EventID",
+                        column: x => x.EventID,
+                        principalTable: "Event",
+                        principalColumn: "EventID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RSVP_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -307,6 +335,16 @@ namespace Tracking_Events.Migrations
                 column: "VenueID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RSVP_EventID",
+                table: "RSVP",
+                column: "EventID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RSVP_UserId",
+                table: "RSVP",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Venue_UserID",
                 table: "Venue",
                 column: "UserID",
@@ -332,16 +370,19 @@ namespace Tracking_Events.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Event");
-
-            migrationBuilder.DropTable(
                 name: "Request");
 
             migrationBuilder.DropTable(
                 name: "Review");
 
             migrationBuilder.DropTable(
+                name: "RSVP");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Event");
 
             migrationBuilder.DropTable(
                 name: "Venue");

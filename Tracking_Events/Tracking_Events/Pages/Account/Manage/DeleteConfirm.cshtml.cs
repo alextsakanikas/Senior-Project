@@ -35,6 +35,9 @@ namespace Tracking_Events.Pages.Account.Manage
                 await _signInManager.SignOutAsync();
                 _logger.LogInformation("User logged out.");
 
+                var rsvps = _context.RSVP.Where(r => r.User == user).ToArray();
+
+                _context.RemoveRange(rsvps);
                 _context.Remove(user);
                 await _context.SaveChangesAsync();
                 return LocalRedirect("/Index");
