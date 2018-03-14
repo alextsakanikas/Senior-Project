@@ -44,13 +44,9 @@ namespace Tracking_Events.Pages.Events
             CurrentSort = sortOrder;
 
             StatusMessage = statusMessage;
-
-            //Delete Events 3 hours past end time
-            _context.Event.RemoveRange(_context.Event.Where(e => e.EndTime < DateTime.Now.AddHours(3)));
-            await _context.SaveChangesAsync();
-
-            //Used to get Parent and Foreign tables
-            IQueryable<Event> events = _context.Event.Include(ev => ev.Venue).Include(ev => ev.Rsvps).AsQueryable();
+            
+            //Used to get Parent and Foreign tables as well as only showing future events
+            IQueryable<Event> events = _context.Event.Include(ev => ev.Venue).Include(ev => ev.Rsvps).Where(e => e.EndTime > DateTime.Now).AsQueryable();
 
             #region Filtering
             CurrentVenueSearch = searchVenue;
