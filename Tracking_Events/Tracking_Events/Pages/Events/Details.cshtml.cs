@@ -24,7 +24,7 @@ namespace Tracking_Events.Pages.Events
         public IActionResult OnGet(int id)
         {
             //Used to get Parent and Foreign tables
-            Event = _context.Event.Include(ev => ev.Venue).Include(ev => ev.Rsvps).Where(e => e.EventID == id).SingleOrDefault();
+            Event = _context.Event.Include(ev => ev.Venue).ThenInclude(v => v.User).Include(ev => ev.Rsvps).Where(e => e.EventID == id).SingleOrDefault();
 
             if (Event == null)
             {
