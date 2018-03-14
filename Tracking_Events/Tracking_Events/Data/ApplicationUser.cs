@@ -24,21 +24,26 @@ namespace Tracking_Events.Data
         public int VenueID { get; set; }
 
         [Required]
+        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
         [Display(Name = "Address")]
         public string Address { get; set; }
 
         [Required]
+        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
         [Display(Name = "City")]
         public string City { get; set; }
 
         [Required]
+        [MaxLength(2, ErrorMessage = "Max length is 2 characters")]
         [Display(Name = "State")]
         public string State { get; set; }
 
         [Required]
         [Display(Name = "Zip")]
         public int Zip { get; set; }
-        
+
+        [Required]
+        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
         [Display(Name = "Venue Name")]
         public string VenueName { get; set; }
 
@@ -59,10 +64,12 @@ namespace Tracking_Events.Data
         public int RequestID { get; set; }
 
         [Required]
+        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
         [Display(Name = "Event Name")]
         public string EventName { get; set; }
 
         [Required]
+        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
         [Display(Name = "Genre")]
         public string Genre { get; set; }
 
@@ -84,9 +91,11 @@ namespace Tracking_Events.Data
         [Display(Name = "Capacity")]
         public int Capacity { get; set; }
 
+        [MaxLength(1000, ErrorMessage = "Max length is 1000 characters")]
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [MaxLength(30)]
         [Display(Name = "Approval Status")]
         public string Status { get; set; } = "Waiting Approval";
 
@@ -100,10 +109,12 @@ namespace Tracking_Events.Data
         public int EventID { get; set; }
 
         [Required]
+        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
         [Display(Name = "Event Name")]
         public string EventName { get; set; }
 
         [Required]
+        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
         [Display(Name = "Genre")]
         public string Genre { get; set; }
 
@@ -125,6 +136,7 @@ namespace Tracking_Events.Data
         [Display(Name = "Capacity")]
         public int Capacity { get; set; }
 
+        [MaxLength(1000, ErrorMessage = "Max length is 1000 characters")]
         [Display(Name = "Description")]
         public string Description { get; set; }
 
@@ -141,6 +153,7 @@ namespace Tracking_Events.Data
         public int ReviewID { get; set; }
         
         [Display(Name = "Reviewer")]
+        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
         public string UserName { get; set; }
 
         //Used to reference Venue table where the account is stored
@@ -152,6 +165,7 @@ namespace Tracking_Events.Data
         public int Rating { get; set; }
 
         [Required]
+        [MaxLength(1000, ErrorMessage = "Max length is 1000 characters")]
         [Display(Name = "Feedback")]
         public string Description { get; set; }
     }

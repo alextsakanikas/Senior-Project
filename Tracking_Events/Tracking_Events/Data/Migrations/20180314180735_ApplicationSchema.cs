@@ -161,11 +161,11 @@ namespace Tracking_Events.Migrations
                 {
                     VenueID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Address = table.Column<string>(nullable: false),
-                    City = table.Column<string>(nullable: false),
-                    State = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(maxLength: 150, nullable: false),
+                    City = table.Column<string>(maxLength: 150, nullable: false),
+                    State = table.Column<string>(maxLength: 2, nullable: false),
                     UserID = table.Column<string>(nullable: true),
-                    VenueName = table.Column<string>(nullable: true),
+                    VenueName = table.Column<string>(maxLength: 150, nullable: false),
                     Zip = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -187,10 +187,10 @@ namespace Tracking_Events.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AgeRequirement = table.Column<int>(nullable: false),
                     Capacity = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true),
                     EndTime = table.Column<DateTime>(nullable: false),
-                    EventName = table.Column<string>(nullable: false),
-                    Genre = table.Column<string>(nullable: false),
+                    EventName = table.Column<string>(maxLength: 150, nullable: false),
+                    Genre = table.Column<string>(maxLength: 150, nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
                     VenueID = table.Column<int>(nullable: true)
                 },
@@ -213,12 +213,12 @@ namespace Tracking_Events.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AgeRequirement = table.Column<int>(nullable: false),
                     Capacity = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true),
                     EndTime = table.Column<DateTime>(nullable: false),
-                    EventName = table.Column<string>(nullable: false),
-                    Genre = table.Column<string>(nullable: false),
+                    EventName = table.Column<string>(maxLength: 150, nullable: false),
+                    Genre = table.Column<string>(maxLength: 150, nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(maxLength: 30, nullable: true),
                     VenueID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -238,9 +238,9 @@ namespace Tracking_Events.Migrations
                 {
                     ReviewID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: false),
                     Rating = table.Column<int>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(maxLength: 150, nullable: true),
                     VenueID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

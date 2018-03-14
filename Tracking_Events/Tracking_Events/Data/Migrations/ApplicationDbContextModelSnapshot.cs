@@ -190,15 +190,18 @@ namespace Tracking_Events.Migrations
 
                     b.Property<int>("Capacity");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000);
 
                     b.Property<DateTime>("EndTime");
 
                     b.Property<string>("EventName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.Property<string>("Genre")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.Property<DateTime>("StartTime");
 
@@ -220,19 +223,23 @@ namespace Tracking_Events.Migrations
 
                     b.Property<int>("Capacity");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000);
 
                     b.Property<DateTime>("EndTime");
 
                     b.Property<string>("EventName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.Property<string>("Genre")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.Property<DateTime>("StartTime");
 
-                    b.Property<string>("Status");
+                    b.Property<string>("Status")
+                        .HasMaxLength(30);
 
                     b.Property<int?>("VenueID");
 
@@ -249,11 +256,13 @@ namespace Tracking_Events.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(1000);
 
                     b.Property<int>("Rating");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .HasMaxLength(150);
 
                     b.Property<int?>("VenueID");
 
@@ -288,17 +297,22 @@ namespace Tracking_Events.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.Property<string>("City")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.Property<string>("State")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(2);
 
                     b.Property<string>("UserID");
 
-                    b.Property<string>("VenueName");
+                    b.Property<string>("VenueName")
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.Property<int>("Zip");
 
