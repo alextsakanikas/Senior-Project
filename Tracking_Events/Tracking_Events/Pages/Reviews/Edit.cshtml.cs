@@ -22,14 +22,9 @@ namespace Tracking_Events.Pages.Reviews
         [BindProperty]
         public Review Review { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Review = await _context.Review.Include(r => r.Venue).SingleOrDefaultAsync(m => m.ReviewID == Convert.ToInt32(id));
+            Review = await _context.Review.Include(r => r.Venue).SingleOrDefaultAsync(m => m.ReviewID == id);
 
             if (Review == null)
             {

@@ -11,9 +11,9 @@ namespace Tracking_Events.Pages.Reviews
 {
     public class DeleteModel : PageModel
     {
-        private readonly Tracking_Events.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DeleteModel(Tracking_Events.Data.ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -21,14 +21,9 @@ namespace Tracking_Events.Pages.Reviews
         [BindProperty]
         public Review Review { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Review = await _context.Review.Include(r => r.Venue).SingleOrDefaultAsync(m => m.ReviewID == Convert.ToInt32(id));
+            Review = await _context.Review.Include(r => r.Venue).SingleOrDefaultAsync(m => m.ReviewID == id);
 
             if (Review == null)
             {

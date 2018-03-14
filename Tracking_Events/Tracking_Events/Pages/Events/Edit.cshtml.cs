@@ -25,15 +25,10 @@ namespace Tracking_Events.Pages.Events
         [BindProperty]
         public Event Event { get; set; }
 
-        public IActionResult OnGet(string id)
+        public IActionResult OnGet(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             //Used to get Parent and Foreign tables
-            Event = _context.Event.Include(ev => ev.Venue).Where(e => e.EventID == Convert.ToInt32(id)).SingleOrDefault();
+            Event = _context.Event.Include(ev => ev.Venue).Where(e => e.EventID == id).SingleOrDefault();
 
             if (Event == null)
             {

@@ -129,6 +129,12 @@
                 @Html.DisplayFor(model => model.Event.EndTime)
             </dd>
             <dt>
+                RSVP/@Html.DisplayNameFor(model => model.Event.Capacity)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.Rsvps.Count)/@Html.DisplayFor(model => model.Event.Capacity)
+            </dd>
+            <dt>
                 @Html.DisplayNameFor(model => model.Event.Description)
             </dt>
             <dd>

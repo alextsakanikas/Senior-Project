@@ -21,14 +21,9 @@ namespace Tracking_Events.Pages.Events
         [BindProperty]
         public Event Event { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Event = await _context.Event.SingleOrDefaultAsync(m => m.EventID == Convert.ToInt32(id));
+            Event = await _context.Event.SingleOrDefaultAsync(m => m.EventID == id);
 
             if (Event == null)
             {
