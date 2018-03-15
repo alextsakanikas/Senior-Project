@@ -20,10 +20,13 @@ namespace Tracking_Events.Pages.Account.Manage
 
         [BindProperty]
         public Venue Venue { get; set; }
+        [BindProperty]
+        public string VenueType { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Venue = await _context.Venue.Include(v => v.User).SingleOrDefaultAsync(v => v.VenueID == id);
+            VenueType = ((VenueType)Venue.VenueType).ToString();
 
             if (Venue == null)
             {

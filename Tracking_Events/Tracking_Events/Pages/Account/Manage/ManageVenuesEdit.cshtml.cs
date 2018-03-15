@@ -36,10 +36,12 @@ namespace Tracking_Events.Pages.Account.Manage
         public VenueType VenueType { get; set; }
         public string StatusMessage { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int id, string statusMessage)
         {
             Venue = await _context.Venue.Include(v => v.User).SingleOrDefaultAsync(m => m.VenueID == id);
             VenueType = (VenueType)Venue.VenueType;
+
+            StatusMessage = statusMessage;
 
             if (Venue == null)
             {
@@ -76,7 +78,7 @@ namespace Tracking_Events.Pages.Account.Manage
             }
             StatusMessage = "You have successfully changed your settings";
 
-            return RedirectToPage("./ManageVenuesEdit", new { id = Venue.VenueID });
+            return RedirectToPage("./ManageVenuesEdit", new { id = Venue.VenueID, statusMessage = StatusMessage });
         }
 
         private bool VenueExists(int id)
