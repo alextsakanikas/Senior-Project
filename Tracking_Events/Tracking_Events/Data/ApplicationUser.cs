@@ -74,7 +74,7 @@ namespace Tracking_Events.Data
         public string Genre { get; set; }
 
         [Required]
-        [Display(Name = "Age Requirement")]
+        [Display(Name = "Age Req.")]
         public int AgeRequirement { get; set; }
 
         [Required]
