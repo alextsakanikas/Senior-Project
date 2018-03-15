@@ -59,6 +59,14 @@ namespace Tracking_Events.Pages.Account
 
             [Display(Name = "Venue Name")]
             public string VenueName { get; set; }
+
+            [Display(Name = "Venue Type")]
+            public VenueType VenueType { get; set; }
+        }
+
+        public enum VenueType
+        {
+            Official = 1, Personal
         }
 
         public void OnGet(string returnUrl = null)
@@ -71,7 +79,7 @@ namespace Tracking_Events.Pages.Account
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                Venue venue = new Venue { Address = capitalize.ToTitleCase(Input.Address), City = capitalize.ToTitleCase(Input.City), State = Input.State.ToUpper(), Zip = Input.Zip, VenueName = capitalize.ToTitleCase(Input.VenueName) };
+                Venue venue = new Venue { Address = capitalize.ToTitleCase(Input.Address), City = capitalize.ToTitleCase(Input.City), State = Input.State.ToUpper(), Zip = Input.Zip, VenueName = capitalize.ToTitleCase(Input.VenueName), VenueType = Convert.ToInt32(Input.VenueType) };
 
                 venue.User = _userManager.GetUserAsync(User).Result;
 

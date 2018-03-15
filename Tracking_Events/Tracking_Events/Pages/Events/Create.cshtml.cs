@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Tracking_Events.Data;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tracking_Events.Pages.Events
 {
@@ -26,11 +27,18 @@ namespace Tracking_Events.Pages.Events
 
         public IActionResult OnGet()
         {
+            IQueryable<Venue> venues = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id).AsQueryable();
+            VenueList = venues.Select(v => new SelectListItem { Value = v.VenueID.ToString(), Text = v.VenueName });
+
             return Page();
         }
 
         [BindProperty]
         public Request Request { get; set; }
+        public IEnumerable<SelectListItem> VenueList { get; set; }
+
+        [BindProperty]
+        public string VenueID { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -41,7 +49,7 @@ namespace Tracking_Events.Pages.Events
 
             var user = _context.ApplicationUser.SingleOrDefault(u => u.Id == _userManager.GetUserAsync(User).Result.Id);
             
-            Request.Venue = _context.Venue.SingleOrDefault(v => v.User.Id == user.Id);
+            Request.Venue = _context.Venue.Include(v => v.User).SingleOrDefault(v => v.VenueID == Convert.ToInt32(VenueID));
             Request.EventName = capitalize.ToTitleCase(Request.EventName);
             Request.Genre = capitalize.ToTitleCase(Request.Genre);
 

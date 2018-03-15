@@ -14,7 +14,7 @@ namespace Tracking_Events.Data
         public int AccountType { get; set; }
 
         //Navigation Properties
-        public Venue Venue { get; set; }
+        public List<Venue> Venues { get; set; }
         public List<RSVP> Rsvps { get; set; }
     }
 
@@ -22,6 +22,11 @@ namespace Tracking_Events.Data
     {
         [Key]
         public int VenueID { get; set; }
+
+        [Required]
+        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
+        [Display(Name = "Venue Name")]
+        public string VenueName { get; set; }
 
         [Required]
         [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
@@ -41,14 +46,10 @@ namespace Tracking_Events.Data
         [Required]
         [Display(Name = "Zip")]
         public int Zip { get; set; }
+        
+        [Display(Name = "Venue Type")]
+        public int VenueType { get; set; }
 
-        [Required]
-        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
-        [Display(Name = "Venue Name")]
-        public string VenueName { get; set; }
-
-        //Foreign Key for One to one
-        public string UserID { get; set; }
         public ApplicationUser User { get; set; }
 
         public List<Request> Requests { get; set; }
@@ -69,7 +70,7 @@ namespace Tracking_Events.Data
         public string EventName { get; set; }
 
         [Required]
-        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
+        [MaxLength(250, ErrorMessage = "Max length is 150 characters")]
         [Display(Name = "Genre")]
         public string Genre { get; set; }
 
@@ -114,7 +115,7 @@ namespace Tracking_Events.Data
         public string EventName { get; set; }
 
         [Required]
-        [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
+        [MaxLength(250, ErrorMessage = "Max length is 150 characters")]
         [Display(Name = "Genre")]
         public string Genre { get; set; }
 

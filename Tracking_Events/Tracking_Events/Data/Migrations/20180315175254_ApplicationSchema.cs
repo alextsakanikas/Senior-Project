@@ -164,16 +164,17 @@ namespace Tracking_Events.Migrations
                     Address = table.Column<string>(maxLength: 150, nullable: false),
                     City = table.Column<string>(maxLength: 150, nullable: false),
                     State = table.Column<string>(maxLength: 2, nullable: false),
-                    UserID = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     VenueName = table.Column<string>(maxLength: 150, nullable: false),
+                    VenueType = table.Column<int>(nullable: false),
                     Zip = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Venue", x => x.VenueID);
                     table.ForeignKey(
-                        name: "FK_Venue_AspNetUsers_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Venue_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -190,7 +191,7 @@ namespace Tracking_Events.Migrations
                     Description = table.Column<string>(maxLength: 1000, nullable: true),
                     EndTime = table.Column<DateTime>(nullable: false),
                     EventName = table.Column<string>(maxLength: 150, nullable: false),
-                    Genre = table.Column<string>(maxLength: 150, nullable: false),
+                    Genre = table.Column<string>(maxLength: 250, nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
                     VenueID = table.Column<int>(nullable: true)
                 },
@@ -216,7 +217,7 @@ namespace Tracking_Events.Migrations
                     Description = table.Column<string>(maxLength: 1000, nullable: true),
                     EndTime = table.Column<DateTime>(nullable: false),
                     EventName = table.Column<string>(maxLength: 150, nullable: false),
-                    Genre = table.Column<string>(maxLength: 150, nullable: false),
+                    Genre = table.Column<string>(maxLength: 250, nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
                     Status = table.Column<string>(maxLength: 30, nullable: true),
                     VenueID = table.Column<int>(nullable: true)
@@ -345,11 +346,9 @@ namespace Tracking_Events.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Venue_UserID",
+                name: "IX_Venue_UserId",
                 table: "Venue",
-                column: "UserID",
-                unique: true,
-                filter: "[UserID] IS NOT NULL");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Tracking_Events.Data;
 using Tracking_Events.Services;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tracking_Events.Pages.Account.Manage
 {
@@ -45,56 +46,21 @@ namespace Tracking_Events.Pages.Account.Manage
             [Required]
             [EmailAddress]
             public string Email { get; set; }
-
-            [Display(Name = "Venue Name")]
-            public string VenueName { get; set; } = "N/A";
-
-            [Required]
-            [Display(Name = "Address")]
-            public string Address { get; set; } = "N/A";
-
-            [Required]
-            [Display(Name = "City")]
-            public string City { get; set; } = "N/A";
-
-            [Required]
-            [Display(Name = "State")]
-            public string State { get; set; } = "N/A";
-
-            [Required]
-            [Display(Name = "Zip")]
-            public int Zip { get; set; } = 0;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            var venue = _context.Venue.SingleOrDefault(v => v.UserID == user.Id);
 
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (user.AccountType == 0 || user.AccountType == 2)
+            Input = new InputModel
             {
-                Input = new InputModel
-                {
-                    Email = user.Email
-                };
-            }
-            else
-            {
-                Input = new InputModel
-                {
-                    Email = user.Email,
-                    VenueName = venue.VenueName,
-                    Address = venue.Address,
-                    City = venue.City,
-                    State = venue.State,
-                    Zip = venue.Zip
-                };
-            }
+                Email = user.Email
+            };
 
             return Page();
         }
@@ -107,7 +73,6 @@ namespace Tracking_Events.Pages.Account.Manage
             }
 
             var user = await _userManager.GetUserAsync(User);
-            var venue = _context.Venue.SingleOrDefault(v => v.UserID == user.Id);
 
             if (user == null)
             {
@@ -124,31 +89,12 @@ namespace Tracking_Events.Pages.Account.Manage
                 }
             }
 
-            if (Input.VenueName != user.Venue.VenueName || Input.Address != user.Venue.Address || Input.City != user.Venue.City || Input.State != user.Venue.State || Input.Zip != user.Venue.Zip)
-            {
-                venue.VenueName = capitalize.ToTitleCase(Input.VenueName);
-                venue.Address = capitalize.ToTitleCase(Input.Address);
-                venue.City = capitalize.ToTitleCase(Input.City);
-                venue.State = Input.State.ToUpper();
-                venue.Zip = Input.Zip;
-
-                var result = await _userManager.UpdateAsync(user);
-
-                //Update Venue
-                _context.Attach(venue).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
-                if (!result.Succeeded)
-                {
-                    throw new ApplicationException($"Unexpected error occured Updating for user with ID '{user.Id}'.");
-                }
-            }
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
 
         public IActionResult OnPostDelete()
-        {
-            
+        {            
             return RedirectToPage("./DeleteConfirm");
         }
     }

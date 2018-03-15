@@ -1,0 +1,33 @@
+﻿@page
+@model Tracking_Events.Pages.Account.Manage.ManageVenuesModel
+
+@{
+    ViewData["Title"] = "Manage Venues";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="info">
+            <th>
+                @Html.DisplayNameFor(model => model.Venues[0].VenueName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Venues)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VenueName)
+                </td>
+                <td>
+                    <a asp-page="./ManageVenuesEdit" asp-route-id="@item.VenueID">Edit</a> |
+                    <a asp-page="./ManageVenuesDelete" asp-route-id="@item.VenueID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

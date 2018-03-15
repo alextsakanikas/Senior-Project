@@ -46,7 +46,7 @@ namespace Tracking_Events.Pages.Events
             StatusMessage = statusMessage;
             
             //Used to get Parent and Foreign tables as well as only showing future events
-            IQueryable<Event> events = _context.Event.Include(ev => ev.Venue).Include(ev => ev.Rsvps).Where(e => e.EndTime > DateTime.Now).AsQueryable();
+            IQueryable<Event> events = _context.Event.Include(ev => ev.Venue).ThenInclude(v => v.User).Include(ev => ev.Rsvps).Where(e => e.EndTime > DateTime.Now).AsQueryable();
 
             #region Filtering
             CurrentVenueSearch = searchVenue;

@@ -20,9 +20,9 @@ namespace Tracking_Events.Pages.Reviews
 
         public IActionResult OnGet()
         {
-            var venuelist = (from s in _context.Venue
-                             select s).Distinct();
-            VenueNames = venuelist.Select(v => new SelectListItem() { Value = v.VenueName, Text = v.VenueName });
+            var venuelist = from s in _context.Venue
+                             select s;
+            VenueNames = venuelist.Select(v => new SelectListItem() { Value = v.VenueID.ToString(), Text = v.VenueName });
             return Page();
         }
 
@@ -31,7 +31,7 @@ namespace Tracking_Events.Pages.Reviews
         public IEnumerable<SelectListItem> VenueNames { get; set; }
 
         [BindProperty]
-        public string VenueName { get; set; }
+        public string VenueID { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -40,7 +40,7 @@ namespace Tracking_Events.Pages.Reviews
                 return Page();
             }
 
-            Review.Venue = _context.Venue.SingleOrDefault(v => v.VenueName == VenueName);
+            Review.Venue = _context.Venue.SingleOrDefault(v => v.VenueID == Convert.ToInt32(VenueID));
             Review.UserName = User.Identity.Name;
 
             _context.Review.Add(Review);

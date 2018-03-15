@@ -11,7 +11,7 @@ using Tracking_Events.Data;
 namespace Tracking_Events.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180314180735_ApplicationSchema")]
+    [Migration("20180315175254_ApplicationSchema")]
     partial class ApplicationSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -202,7 +202,7 @@ namespace Tracking_Events.Migrations
 
                     b.Property<string>("Genre")
                         .IsRequired()
-                        .HasMaxLength(150);
+                        .HasMaxLength(250);
 
                     b.Property<DateTime>("StartTime");
 
@@ -235,7 +235,7 @@ namespace Tracking_Events.Migrations
 
                     b.Property<string>("Genre")
                         .IsRequired()
-                        .HasMaxLength(150);
+                        .HasMaxLength(250);
 
                     b.Property<DateTime>("StartTime");
 
@@ -309,19 +309,19 @@ namespace Tracking_Events.Migrations
                         .IsRequired()
                         .HasMaxLength(2);
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("VenueName")
                         .IsRequired()
                         .HasMaxLength(150);
 
+                    b.Property<int>("VenueType");
+
                     b.Property<int>("Zip");
 
                     b.HasKey("VenueID");
 
-                    b.HasIndex("UserID")
-                        .IsUnique()
-                        .HasFilter("[UserID] IS NOT NULL");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Venue");
                 });
@@ -411,8 +411,8 @@ namespace Tracking_Events.Migrations
             modelBuilder.Entity("Tracking_Events.Data.Venue", b =>
                 {
                     b.HasOne("Tracking_Events.Data.ApplicationUser", "User")
-                        .WithOne("Venue")
-                        .HasForeignKey("Tracking_Events.Data.Venue", "UserID")
+                        .WithMany("Venues")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

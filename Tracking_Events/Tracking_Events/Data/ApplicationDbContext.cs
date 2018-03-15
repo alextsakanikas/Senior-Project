@@ -21,7 +21,7 @@ namespace Tracking_Events.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUser>().HasOne(a => a.Venue).WithOne(v => v.User).HasForeignKey<Venue>(v => v.UserID).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Venue>().HasOne(v => v.User).WithMany(a => a.Venues).OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Request>().HasOne(r => r.Venue).WithMany(v => v.Requests).OnDelete(DeleteBehavior.Cascade);
 

@@ -34,7 +34,7 @@ namespace Tracking_Events.Pages.Requests
             }
             else if (user.AccountType == 1)
             {
-                var requests = _context.Request.Include(r => r.Venue).Where(r => r.Venue.UserID == user.Id).AsQueryable();
+                var requests = _context.Request.Include(r => r.Venue).ThenInclude(v => v.User).Where(r => r.Venue.User.Id == user.Id).AsQueryable();
                 Requests = await requests.AsNoTracking().ToListAsync();
             }
         }
