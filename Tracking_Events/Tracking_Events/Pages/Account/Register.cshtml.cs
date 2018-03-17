@@ -37,6 +37,10 @@ namespace Tracking_Events.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
+        [BindProperty]
+        [Display(Name = "Register a location")]
+        public bool Register { get; set; }
+
         public string ReturnUrl { get; set; }
 
         public class InputModel
@@ -59,12 +63,7 @@ namespace Tracking_Events.Pages.Account
 
             [Required]
             [Display(Name = "Account Type")]
-            public AccountType AccountType { get; set; }
-        }
-
-        public enum AccountType
-        {
-            Venue = 1, User
+            public int AccountType { get; set; } = 1;
         }
 
         public void OnGet(string returnUrl = null)
@@ -77,7 +76,7 @@ namespace Tracking_Events.Pages.Account
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, AccountType = (int)Input.AccountType };
+                ApplicationUser user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, AccountType = Input.AccountType };
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
@@ -86,7 +85,7 @@ namespace Tracking_Events.Pages.Account
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    if (Input.AccountType == AccountType.Venue)
+                    if (Register)
                     {
                         return RedirectToPage("./RegisterVenue");
                     }
