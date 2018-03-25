@@ -13,6 +13,11 @@ using System.Globalization;
 
 namespace Tracking_Events.Pages.Account
 {
+    public enum VenueType
+    {
+        Official = 1, Personal
+    }
+
     public class RegisterVenueModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -62,11 +67,6 @@ namespace Tracking_Events.Pages.Account
 
             [Display(Name = "Venue Type")]
             public VenueType VenueType { get; set; }
-        }
-
-        public enum VenueType
-        {
-            Official = 1, Personal
         }
 
         public void OnGet(string returnUrl = null)

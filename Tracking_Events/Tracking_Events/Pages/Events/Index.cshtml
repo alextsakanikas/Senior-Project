@@ -74,6 +74,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Event[0].Venue.Zip)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Venue.VenueType)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -107,6 +110,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Venue.Zip)
+                </td>
+                <td>
+                    @(((Account.VenueType)item.Venue.VenueType).ToString())
                 </td>
                 <td>
                     @if (SignInManager.IsSignedIn(User))

@@ -71,7 +71,7 @@ namespace Tracking_Events.Data
 
         [Required]
         [MaxLength(250, ErrorMessage = "Max length is 150 characters")]
-        [Display(Name = "Genre")]
+        [Display(Name = "Genre(s)")]
         public string Genre { get; set; }
 
         [Required]
@@ -116,7 +116,7 @@ namespace Tracking_Events.Data
 
         [Required]
         [MaxLength(250, ErrorMessage = "Max length is 150 characters")]
-        [Display(Name = "Genre")]
+        [Display(Name = "Genre(s)")]
         public string Genre { get; set; }
 
         [Required]

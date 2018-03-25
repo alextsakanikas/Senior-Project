@@ -10,9 +10,12 @@
             <li>
                 <a asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>
-            <li>
-                <a asp-page="/Account/RegisterVenue" title="Manage">Register a Location</a>
-            </li>
+            @if (UserManager.GetUserAsync(User).Result.AccountType != 0)
+            {
+                <li>
+                    <a asp-page="/Account/RegisterVenue" title="Manage">Register a Location</a>
+                </li>
+            }
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
             </li>

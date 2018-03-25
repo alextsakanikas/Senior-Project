@@ -13,6 +13,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Venues[0].VenueName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Venues[0].VenueType)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -22,6 +25,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.VenueName)
+                </td>
+                <td>
+                    @(((Account.VenueType)item.VenueType).ToString())
                 </td>
                 <td>
                     <a asp-page="./ManageVenuesEdit" asp-route-id="@item.VenueID">Edit</a> |

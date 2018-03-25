@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.VenueType"></label>
-                <select asp-for="Input.VenueType" asp-items="@Html.GetEnumSelectList<RegisterVenueModel.VenueType>()" class="form-control"></select>
+                <select asp-for="Input.VenueType" asp-items="@Html.GetEnumSelectList<VenueType>()" class="form-control"></select>
             </div>
             <button type="submit" class="btn btn-primary btn-sm">Register</button>
         </form>
