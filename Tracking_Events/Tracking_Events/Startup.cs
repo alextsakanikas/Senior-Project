@@ -96,7 +96,14 @@ namespace Tracking_Events
 
             app.UseMvc();
 
-            seeder.SeedAdmin().Wait();
+            try
+            {
+                seeder.SeedAdmin().Wait();
+            }
+            catch
+            {
+
+            }
         }
     }
 }
