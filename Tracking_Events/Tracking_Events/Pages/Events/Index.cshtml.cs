@@ -62,7 +62,7 @@ namespace Tracking_Events.Pages.Events
             }
             if (!String.IsNullOrEmpty(searchZip))
             {
-                events = events.Where(s => s.Venue.Zip.ToString().Equals(searchZip));
+                events = events.Where(s => s.Venue.Zip.ToString().Contains(searchZip));
             }
             #endregion
 
