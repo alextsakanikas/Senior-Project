@@ -35,14 +35,9 @@ namespace Tracking_Events.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Venue = await _context.Venue.FindAsync(Convert.ToInt32(id));
+            Venue = await _context.Venue.FindAsync(id);
 
             if (Venue != null)
             {

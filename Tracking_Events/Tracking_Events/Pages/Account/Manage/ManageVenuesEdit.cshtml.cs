@@ -57,6 +57,10 @@ namespace Tracking_Events.Pages.Account.Manage
                 return Page();
             }
 
+            Venue.VenueName = capitalize.ToTitleCase(Venue.VenueName);
+            Venue.Address = capitalize.ToTitleCase(Venue.Address);
+            Venue.City = capitalize.ToTitleCase(Venue.City);
+            Venue.State = Venue.State.ToUpper();
             Venue.VenueType = Convert.ToInt32(VenueType);
 
             _context.Attach(Venue).State = EntityState.Modified;

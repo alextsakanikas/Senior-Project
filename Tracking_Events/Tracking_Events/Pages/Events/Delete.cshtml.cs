@@ -32,14 +32,9 @@ namespace Tracking_Events.Pages.Events
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Event = await _context.Event.FindAsync(Convert.ToInt32(id));
+            Event = await _context.Event.FindAsync(id);
 
             if (Event != null)
             {
