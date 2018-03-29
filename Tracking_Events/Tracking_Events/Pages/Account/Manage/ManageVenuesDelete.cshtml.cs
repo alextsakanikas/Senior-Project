@@ -42,7 +42,7 @@ namespace Tracking_Events.Pages.Account.Manage
                 return NotFound();
             }
 
-            Venue = await _context.Venue.FindAsync(id);
+            Venue = await _context.Venue.FindAsync(Convert.ToInt32(id));
 
             if (Venue != null)
             {
