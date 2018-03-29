@@ -131,7 +131,7 @@
                     <a asp-page="./Details" asp-route-id="@item.EventID">Details</a>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        @if (item.Capacity > item.Rsvps.Count && UserManager.GetUserAsync(User).Result.AccountType == 2)
+                        @if (item.Capacity > item.Rsvps.Count && UserManager.GetUserAsync(User).Result.AccountType == 1)
                         {
                             <span> | </span>
                             <a asp-page="./RSVP" asp-route-id="@item.EventID">RSVP</a>
