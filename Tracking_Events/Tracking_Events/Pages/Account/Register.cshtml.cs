@@ -46,6 +46,16 @@ namespace Tracking_Events.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(65)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(65)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -76,7 +86,7 @@ namespace Tracking_Events.Pages.Account
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, AccountType = Input.AccountType };
+                ApplicationUser user = new ApplicationUser { FirstName = Input.FirstName, LastName = Input.LastName, UserName = Input.Email, Email = Input.Email, AccountType = Input.AccountType };
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
