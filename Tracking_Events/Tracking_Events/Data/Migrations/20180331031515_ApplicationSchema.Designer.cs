@@ -11,7 +11,7 @@ using Tracking_Events.Data;
 namespace Tracking_Events.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180315175254_ApplicationSchema")]
+    [Migration("20180331031515_ApplicationSchema")]
     partial class ApplicationSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,6 +145,10 @@ namespace Tracking_Events.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
