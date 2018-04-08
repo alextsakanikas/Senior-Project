@@ -45,7 +45,7 @@ namespace Tracking_Events.Pages.Account.Manage
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./ManageVenues", new { statusMessage = "Successfully deleted Venue" });
+            return RedirectToPage("./ManageVenues", new { statusMessage = "Successfully deleted Venue: " + Venue.VenueName });
         }
     }
 }

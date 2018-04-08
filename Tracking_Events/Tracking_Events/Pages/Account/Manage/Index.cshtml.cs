@@ -48,9 +48,10 @@ namespace Tracking_Events.Pages.Account.Manage
             public string Email { get; set; }
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(string statusMessage)
         {
             var user = await _userManager.GetUserAsync(User);
+            StatusMessage = statusMessage;
 
             if (user == null)
             {

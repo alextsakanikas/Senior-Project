@@ -52,7 +52,7 @@ namespace Tracking_Events.Pages.Account.Manage
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index", new { statusMessage = "Successfully deleted Event" });
+            return RedirectToPage("./Index", new { statusMessage = "Successfully deleted Event: " + Event.EventName });
         }
     }
 }

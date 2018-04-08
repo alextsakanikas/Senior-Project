@@ -12,21 +12,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Tracking_Events.Pages.Events
 {
-    public class CreateModel : PageModel
+    public class ManageEventsCreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         //Used for Capitalization
         private readonly TextInfo capitalize = CultureInfo.CurrentCulture.TextInfo;
 
-        public CreateModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ManageEventsCreateModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(string statusMessage)
         {
+            StatusMessage = statusMessage;
             IQueryable<Venue> venues = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id).AsQueryable();
             VenueList = venues.Select(v => new SelectListItem { Value = v.VenueID.ToString(), Text = v.VenueName });
 
@@ -36,6 +37,9 @@ namespace Tracking_Events.Pages.Events
         [BindProperty]
         public Request Request { get; set; }
         public IEnumerable<SelectListItem> VenueList { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
 
         [BindProperty]
         public string VenueID { get; set; }
@@ -47,6 +51,11 @@ namespace Tracking_Events.Pages.Events
                 return Page();
             }
 
+            if (Request.StartTime > Request.EndTime)
+            {
+                return RedirectToPage("./ManageEventsCreate", new { statusMessage = "Start Time has to be before End Time" });
+            }
+
             var user = _context.ApplicationUser.SingleOrDefault(u => u.Id == _userManager.GetUserAsync(User).Result.Id);
             
             Request.Venue = _context.Venue.Include(v => v.User).SingleOrDefault(v => v.VenueID == Convert.ToInt32(VenueID));
@@ -56,7 +65,7 @@ namespace Tracking_Events.Pages.Events
             _context.Request.Add(Request);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index", new { statusMessage = "Please wait for Admin Approval" });
+            return RedirectToPage("./ManageEvents", new { statusMessage = "Please wait for Admin Approval" });
         }
     }
 }

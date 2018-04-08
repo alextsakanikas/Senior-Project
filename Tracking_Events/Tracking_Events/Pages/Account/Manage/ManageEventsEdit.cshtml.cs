@@ -11,13 +11,13 @@ using System.Globalization;
 
 namespace Tracking_Events.Pages.Events
 {
-    public class EditModel : PageModel
+    public class ManageEventsEditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
         //Used for Capitalization
         private readonly TextInfo capitalize = CultureInfo.CurrentCulture.TextInfo;
 
-        public EditModel(ApplicationDbContext context)
+        public ManageEventsEditModel(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -65,7 +65,7 @@ namespace Tracking_Events.Pages.Events
                 }
             }
 
-            return RedirectToPage("./Index", new { statusMessage = "Successfully edited Event: " + Event.EventName });
+            return RedirectToPage("./ManageEvents", new { statusMessage = "Successfully edited Event: " + Event.EventName });
         }
 
         private bool EventExists(int id)

@@ -80,9 +80,9 @@ namespace Tracking_Events.Pages.Account.Manage
                     throw;
                 }
             }
-            StatusMessage = "You have successfully changed your settings";
+            StatusMessage = "You have successfully edited Venue: " + Venue.VenueName;
 
-            return RedirectToPage("./ManageVenuesEdit", new { id = Venue.VenueID, statusMessage = StatusMessage });
+            return RedirectToPage("./ManageVenues", new { statusMessage = StatusMessage });
         }
 
         private bool VenueExists(int id)
