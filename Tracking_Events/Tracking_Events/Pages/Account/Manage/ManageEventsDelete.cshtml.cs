@@ -9,17 +9,17 @@ using Tracking_Events.Data;
 
 namespace Tracking_Events.Pages.Account.Manage
 {
-    public class ManageRSVPsDeleteModel : PageModel
+    public class ManageEventsDeleteModel : PageModel
     {
-        private readonly Tracking_Events.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ManageRSVPsDeleteModel(Tracking_Events.Data.ApplicationDbContext context)
+        public ManageEventsDeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public RSVP RSVP { get; set; }
+        public Event Event { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,9 +28,9 @@ namespace Tracking_Events.Pages.Account.Manage
                 return NotFound();
             }
 
-            RSVP = await _context.RSVP.Include(r => r.Event).SingleOrDefaultAsync(m => m.RsvpID == id);
+            Event = await _context.Event.SingleOrDefaultAsync(m => m.EventID == id);
 
-            if (RSVP == null)
+            if (Event == null)
             {
                 return NotFound();
             }
@@ -44,15 +44,15 @@ namespace Tracking_Events.Pages.Account.Manage
                 return NotFound();
             }
 
-            RSVP = await _context.RSVP.FindAsync(id);
+            Event = await _context.Event.FindAsync(id);
 
-            if (RSVP != null)
+            if (Event != null)
             {
-                _context.RSVP.Remove(RSVP);
+                _context.Event.Remove(Event);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./ManageRSVPs", new { statusMessage = "Successfully unRSVPed" });
+            return RedirectToPage("./Index", new { statusMessage = "Successfully deleted Event" });
         }
     }
 }

@@ -86,7 +86,7 @@ namespace Tracking_Events.Pages.Account
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { FirstName = Input.FirstName, LastName = Input.LastName, UserName = Input.Email, Email = Input.Email, AccountType = Input.AccountType };
+                ApplicationUser user = new ApplicationUser { FirstName = capitalize.ToTitleCase(Input.FirstName), LastName = capitalize.ToTitleCase(Input.LastName), UserName = Input.Email, Email = Input.Email, AccountType = Input.AccountType };
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

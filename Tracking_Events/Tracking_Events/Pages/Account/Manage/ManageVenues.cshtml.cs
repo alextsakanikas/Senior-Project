@@ -23,8 +23,13 @@ namespace Tracking_Events.Pages.Account.Manage
 
         public IList<Venue> Venues { get;set; }
 
-        public async Task OnGetAsync()
+        [TempData]
+        public string StatusMessage { get; set; }
+
+        public async Task OnGetAsync(string statusMessage)
         {
+            StatusMessage = statusMessage;
+
             var users = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id);
             Venues = await users.OrderBy(v => v.VenueName).ToListAsync();
         }
