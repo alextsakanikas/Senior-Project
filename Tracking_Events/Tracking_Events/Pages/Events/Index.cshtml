@@ -134,7 +134,10 @@
                         @if (item.Capacity > item.Rsvps.Count && UserManager.GetUserAsync(User).Result.AccountType == 1)
                         {
                             <span> | </span>
-                            <a asp-page="./RSVP" asp-route-id="@item.EventID">RSVP</a>
+                            <form asp-route-id="@item.EventID" asp-route-rsvpAmount="@Model.RSVPAmount" method="post" >
+                                <input type="number" asp-for="@Model.RSVPAmount" min="1" max="@(item.Capacity - item.Rsvps.Count)" />
+                                <button type="submit" >RSVP</button>
+                            </form>
                         }
                     }
                 </td>
