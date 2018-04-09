@@ -1,0 +1,62 @@
+﻿@page
+@model Tracking_Events.Pages.Account.Manage.ManageRSVPsDetailsModel
+
+@{
+    ViewData["Title"] = "RSVP Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.EventName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.EventName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.Genre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.Genre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.AgeRequirement)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.AgeRequirement)+
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.StartTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.StartTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.EndTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.EndTime)
+        </dd>
+        <dt>
+            RSVP/@Html.DisplayNameFor(model => model.RSVP.Event.Capacity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.Rsvps.Count)/@Html.DisplayFor(model => model.RSVP.Event.Capacity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.Description)
+            <br />
+            <br />
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./ManageRSVPsDelete" asp-route-id="@Model.RSVP.RsvpID">Delete</a> | 
+    <a asp-page="./ManageRSVPs">Back to RSVP List</a>
+</div>

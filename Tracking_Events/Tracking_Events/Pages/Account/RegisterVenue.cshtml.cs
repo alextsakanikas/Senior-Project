@@ -89,7 +89,7 @@ namespace Tracking_Events.Pages.Account
 
                 _logger.LogInformation("Venue created with user.");
 
-                return RedirectToPage("./Manage/Index", new { statusMessage = "Successfully registered a location" });
+                return RedirectToPage("./Manage/ManageVenues", new { statusMessage = "Successfully registered a location" });
             }
 
             // If we got this far, something failed, redisplay form
