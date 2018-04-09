@@ -60,7 +60,7 @@ namespace Tracking_Events.Pages.Requests
                 request.Status = "Approved";
 
                 await _context.Event.AddAsync(Event);
-                _context.Attach(request).State = EntityState.Modified;
+                _context.Update(request);
 
                 await _context.SaveChangesAsync();
             }
@@ -68,7 +68,7 @@ namespace Tracking_Events.Pages.Requests
             {
                 request.Status = "Rejected";
 
-                _context.Attach(request).State = EntityState.Modified;
+                _context.Update(request);
 
                 await _context.SaveChangesAsync();
             }

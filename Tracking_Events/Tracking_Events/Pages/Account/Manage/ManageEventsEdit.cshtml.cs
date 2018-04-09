@@ -47,7 +47,7 @@ namespace Tracking_Events.Pages.Events
             Event.EventName = capitalize.ToTitleCase(Event.EventName);
             Event.Genre = capitalize.ToTitleCase(Event.Genre);
 
-            _context.Attach(Event).State = EntityState.Modified;
+            _context.Update(Event);
 
             try
             {

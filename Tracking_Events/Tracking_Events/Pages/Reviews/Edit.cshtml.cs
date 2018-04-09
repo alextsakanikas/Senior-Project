@@ -40,7 +40,7 @@ namespace Tracking_Events.Pages.Reviews
                 return Page();
             }
 
-            _context.Attach(Review).State = EntityState.Modified;
+            _context.Update(Review);
 
             try
             {

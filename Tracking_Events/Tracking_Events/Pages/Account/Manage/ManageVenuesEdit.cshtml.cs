@@ -63,7 +63,7 @@ namespace Tracking_Events.Pages.Account.Manage
             Venue.State = Venue.State.ToUpper();
             Venue.VenueType = Convert.ToInt32(VenueType);
 
-            _context.Attach(Venue).State = EntityState.Modified;
+            _context.Update(Venue);
 
             try
             {

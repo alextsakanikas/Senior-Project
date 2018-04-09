@@ -92,6 +92,15 @@
     <div class="col-md-6">
         <hr />
         <dl class="dl-horizontal">
+            @if (Model.Event.Venue.VenueType == (int)Tracking_Events.Pages.Account.VenueType.Personal)
+            {
+                <dt class="text-primary">
+                    Hosted By
+                </dt>
+                <dd>
+                    @(Model.Event.Venue.User.FirstName + " " + Model.Event.Venue.User.LastName)
+                </dd>
+            }
             <dt>
                 @Html.DisplayNameFor(model => model.Event.Venue.VenueName)
             </dt>
@@ -196,7 +205,7 @@
     {
         @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == Model.Event.Venue.User.Id)
         {
-            <a asp-page="./Edit" asp-route-id="@Model.Event.EventID">Edit Event</a> <span> | </span>
+            <a asp-page="/Account/Manage/ManageEventsEdit" asp-route-id="@Model.Event.EventID">Edit Event</a> <span> | </span>
         }
     }
     <a asp-page="./Index">Back to List</a>
