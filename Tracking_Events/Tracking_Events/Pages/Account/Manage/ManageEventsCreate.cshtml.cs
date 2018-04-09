@@ -28,14 +28,14 @@ namespace Tracking_Events.Pages.Events
         public IActionResult OnGet()
         {
             IQueryable<Venue> venues = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id).AsQueryable();
-            VenueList = venues.Select(v => new SelectListItem { Value = v.VenueID.ToString(), Text = v.VenueName });
+            VenueSelectList = venues.Select(v => new SelectListItem { Value = v.VenueID.ToString(), Text = v.VenueName });
 
             return Page();
         }
 
         [BindProperty]
         public Request Request { get; set; }
-        public IEnumerable<SelectListItem> VenueList { get; set; }
+        public IEnumerable<SelectListItem> VenueSelectList { get; set; }
 
         [BindProperty]
         public string VenueID { get; set; }
