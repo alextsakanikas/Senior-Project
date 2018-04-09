@@ -27,8 +27,12 @@ namespace Tracking_Events.Pages.Events
         [BindProperty]
         public int RSVPAmount { get; set; }
 
-        public IActionResult OnGet(int id)
+        [TempData]
+        public string StatusMessage { get; set; }
+
+        public IActionResult OnGet(int id, string statusMessage)
         {
+            StatusMessage = statusMessage;
             //Used to get Parent and Foreign tables
             Event = _context.Event.Include(ev => ev.Venue).ThenInclude(v => v.User).Include(ev => ev.Rsvps).Where(e => e.EventID == id).SingleOrDefault();
 
@@ -56,7 +60,7 @@ namespace Tracking_Events.Pages.Events
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index", new { statusMessage = "You have successfully RSVPed" });
+            return RedirectToPage("./Details", new { id = Event.EventID, statusMessage = "You have successfully RSVPed to: " + Event.EventName });
         }
     }
 }

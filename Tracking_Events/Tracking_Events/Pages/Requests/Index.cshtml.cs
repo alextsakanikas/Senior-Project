@@ -54,7 +54,7 @@ namespace Tracking_Events.Pages.Requests
                     StartTime = request.StartTime,
                     EndTime = request.EndTime,
                     Capacity = request.Capacity,
-                    Description = request.Description,
+                    Description = request.Description
                 };
 
                 request.Status = "Approved";

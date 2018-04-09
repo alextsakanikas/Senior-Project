@@ -120,7 +120,7 @@ namespace Tracking_Events.Pages.Events
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index", new { statusMessage = "You have successfully RSVPed" });
+            return RedirectToPage("./Index", new { statusMessage = "You have successfully RSVPed to: " + Event.EventName });
         }
     }
 }
