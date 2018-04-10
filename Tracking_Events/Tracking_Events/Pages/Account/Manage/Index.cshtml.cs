@@ -45,6 +45,7 @@ namespace Tracking_Events.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
         }
 
