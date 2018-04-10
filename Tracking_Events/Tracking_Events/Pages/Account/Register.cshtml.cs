@@ -46,12 +46,12 @@ namespace Tracking_Events.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(65)]
+            [StringLength(65, ErrorMessage = "Name cannot be longer than 65 characters")]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
-            [StringLength(65)]
+            [StringLength(65, ErrorMessage = "Name cannot be longer than 65 characters")]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
