@@ -26,11 +26,21 @@ namespace Tracking_Events.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
-        public async Task OnGetAsync(string statusMessage)
+        public string Search { get; set; }
+
+        public async Task OnGetAsync(string statusMessage, string search)
         {
             StatusMessage = statusMessage;
 
             var users = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id);
+
+            //Filter by search
+            if (!String.IsNullOrEmpty(search))
+            {
+                Search = search;
+                users = users.Where(v => v.VenueName.Contains(search));
+            }
+
             Venues = await users.OrderBy(v => v.VenueName).ToListAsync();
         }
     }

@@ -11,6 +11,16 @@
 <p>
     <a asp-page="/Account/RegisterVenue">Register a new location</a>
 </p>
+<form class="form-inline" asp-page="./ManageVenues" method="get" >
+    <div class="form-group">
+        <label>Venue Name:</label>
+        <input name="search" value="@Model.Search" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-info btn-sm" /> |
+        <a asp-page="./ManageVenues">Back to full list</a>
+    </div>
+</form>
 <table class="table table-striped table-hover">
     <thead>
         <tr class="info">

@@ -44,6 +44,8 @@ namespace Tracking_Events.Pages.Events
         {
             if (!ModelState.IsValid)
             {
+                IQueryable<Venue> venues = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id).AsQueryable();
+                VenueSelectList = venues.Select(v => new SelectListItem { Value = v.VenueID.ToString(), Text = v.VenueName });
                 return Page();
             }
 

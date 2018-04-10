@@ -54,6 +54,36 @@
             <br />
             <br />
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.Venue.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.Venue.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.Venue.City)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.Venue.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.Venue.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.Venue.State)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.Venue.Zip)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RSVP.Event.Venue.Zip)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RSVP.Event.Venue.VenueType)
+        </dt>
+        <dd>
+            @(((Account.VenueType)Model.RSVP.Event.Venue.VenueType).ToString())
+        </dd>
     </dl>
 </div>
 <div>

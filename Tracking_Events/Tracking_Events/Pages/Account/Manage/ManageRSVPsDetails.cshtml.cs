@@ -27,7 +27,7 @@ namespace Tracking_Events.Pages.Account.Manage
                 return NotFound();
             }
 
-            RSVP = await _context.RSVP.Include(r => r.Event).SingleOrDefaultAsync(m => m.RsvpID == id);
+            RSVP = await _context.RSVP.Include(r => r.Event).ThenInclude(e => e.Venue).SingleOrDefaultAsync(m => m.RsvpID == id);
 
             if (RSVP == null)
             {

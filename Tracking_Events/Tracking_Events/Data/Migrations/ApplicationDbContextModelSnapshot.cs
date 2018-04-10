@@ -145,9 +145,11 @@ namespace Tracking_Events.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(65);
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .HasMaxLength(65);
 
                     b.Property<bool>("LockoutEnabled");
 
