@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Tracking_Events.Pages.Events
 {
-    public class CreateModel : PageModel
+    public class ManageEventsCreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         //Used for Capitalization
         private readonly TextInfo capitalize = CultureInfo.CurrentCulture.TextInfo;
 
-        public CreateModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ManageEventsCreateModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -28,14 +28,14 @@ namespace Tracking_Events.Pages.Events
         public IActionResult OnGet()
         {
             IQueryable<Venue> venues = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id).AsQueryable();
-            VenueList = venues.Select(v => new SelectListItem { Value = v.VenueID.ToString(), Text = v.VenueName });
+            VenueSelectList = venues.Select(v => new SelectListItem { Value = v.VenueID.ToString(), Text = v.VenueName });
 
             return Page();
         }
 
         [BindProperty]
         public Request Request { get; set; }
-        public IEnumerable<SelectListItem> VenueList { get; set; }
+        public IEnumerable<SelectListItem> VenueSelectList { get; set; }
 
         [BindProperty]
         public string VenueID { get; set; }
@@ -56,7 +56,7 @@ namespace Tracking_Events.Pages.Events
             _context.Request.Add(Request);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index", new { statusMessage = "Please wait for Admin Approval" });
+            return RedirectToPage("./ManageEvents", new { statusMessage = "Please wait for Admin Approval" });
         }
     }
 }

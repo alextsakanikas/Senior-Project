@@ -9,89 +9,99 @@
 <h2>@ViewData["Title"]</h2>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvzYPgeeulPJarwP3tpSwNW7UAZV7rJrM&callback=initMap" type="text/javascript"></script>
 @*<script>
-    var geocoder;
-    var map;
-    var gmarkers = [];
-    var currentMarker;
+        var geocoder;
+        var map;
+        var gmarkers = [];
+        var currentMarker;
 
-    //Initializes the map and puts it into an id with 'map'
-    function initMap() {
-        geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(-34.397, 150.644);
-        var mapOptions = {
-            zoom: 8,
-            center: latlng,
-            mapTypeId: 'roadmap'
+        //Initializes the map and puts it into an id with 'map'
+        function initMap() {
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(-34.397, 150.644);
+            var mapOptions = {
+                zoom: 8,
+                center: latlng,
+                mapTypeId: 'roadmap'
+            }
+
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            //Current location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var icon = 'http://maps.google.com/mapfiles/kml/pal3/icon56.png'
+                    currentMarker = new google.maps.Marker({
+                        map: map,
+                        position: pos,
+                        icon: icon
+                    })
+                    map.setCenter(pos);
+                });
+            }
+
+            getlocation();
         }
 
-        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        //Used to get an address and set markers
+        function getlocation() {
+            var address = @Html.Raw(Json.Serialize(Model.Event.Venue.Address + " " + Model.Event.Venue.City + " " + Model.Event.Venue.State + " " + Model.Event.Venue.Zip));
 
-        //Current location
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                var icon = 'http://maps.google.com/mapfiles/kml/pal3/icon56.png'
-                currentMarker = new google.maps.Marker({
-                    map: map,
-                    position: pos,
-                    icon: icon
-                })
-                map.setCenter(pos);
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    map.setZoom(14);
+                    deleteMarkers();
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                    gmarkers.push(marker);
+                    setZoom(map, gmarkers);
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
             });
         }
 
-        getlocation();
-    }
-
-    //Used to get an address and set markers
-    function getlocation() {
-        var address = @Html.Raw(Json.Serialize(Model.Event.Venue.Address + " " + Model.Event.Venue.City + " " + Model.Event.Venue.State + " " + Model.Event.Venue.Zip));
-
-        geocoder.geocode({ 'address': address }, function (results, status) {
-            if (status == 'OK') {
-                map.setCenter(results[0].geometry.location);
-                map.setZoom(14);
-                deleteMarkers();
-
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location
-                });
-                gmarkers.push(marker);
-                setZoom(map, gmarkers);
-            } else {
-                alert('Geocode was not successful for the following reason: ' + status);
+        //Used to Delete all map markers
+        function deleteMarkers() {
+            for (var i = 0; i < gmarkers.length; i++)
+            {
+                gmarkers[i].setMap(null);
             }
-        });
-    }
-
-    //Used to Delete all map markers
-    function deleteMarkers() {
-        for (var i = 0; i < gmarkers.length; i++)
-        {
-            gmarkers[i].setMap(null);
+            gmarkers = [];
         }
-        gmarkers = [];
-    }
 
-    //Fit to all markers
-    function setZoom(map, gmarkers) {
-        var boundbox = new google.maps.LatLngBounds();
-        boundbox.extend(currentMarker.getPosition());
-        for (var i = 0; i < gmarkers.length; i++) {
-            boundbox.extend(gmarkers[i].getPosition());
+        //Fit to all markers
+        function setZoom(map, gmarkers) {
+            var boundbox = new google.maps.LatLngBounds();
+            boundbox.extend(currentMarker.getPosition());
+            for (var i = 0; i < gmarkers.length; i++) {
+                boundbox.extend(gmarkers[i].getPosition());
+            }
+            map.fitBounds(boundbox);
         }
-        map.fitBounds(boundbox);
-    }
-</script>*@
+    </script>*@
+@Html.Partial("./Account/Manage/_StatusMessage", Model.StatusMessage)
 
 <div class="row">
     <div class="col-md-6">
         <hr />
         <dl class="dl-horizontal">
+            @if (Model.Event.Venue.VenueType == (int)Tracking_Events.Pages.Account.VenueType.Personal)
+            {
+                <dt class="text-primary">
+                    Hosted By
+                </dt>
+                <dd>
+                    @(Model.Event.Venue.User.FirstName + " " + Model.Event.Venue.User.LastName)
+                </dd>
+            }
             <dt>
                 @Html.DisplayNameFor(model => model.Event.Venue.VenueName)
             </dt>
@@ -172,6 +182,19 @@
             <dd>
                 @(((Account.VenueType)Model.Event.Venue.VenueType).ToString())
             </dd>
+            <dd>
+                <br />
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    @if (Model.Event.Capacity > Model.Event.Rsvps.Count && UserManager.GetUserAsync(User).Result.AccountType == 1)
+                    {
+                        <form asp-route-id="@Model.Event.EventID" asp-route-rsvpAmount="@Model.RSVPAmount" method="post">
+                            <input type="number" asp-for="@Model.RSVPAmount" min="1" max="@(Model.Event.Capacity - Model.Event.Rsvps.Count)" />
+                            <button type="submit">RSVP</button>
+                        </form>
+                    }
+                }
+            </dd>
         </dl>
     </div>
     <div class="col-md-6">
@@ -183,7 +206,7 @@
     {
         @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == Model.Event.Venue.User.Id)
         {
-            <a asp-page="./Edit" asp-route-id="@Model.Event.EventID">Edit Event</a> <span> | </span>
+            <a asp-page="/Account/Manage/ManageEventsEdit" asp-route-id="@Model.Event.EventID">Edit Event</a> <span> | </span>
         }
     }
     <a asp-page="./Index">Back to List</a>

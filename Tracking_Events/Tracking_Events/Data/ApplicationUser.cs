@@ -11,8 +11,16 @@ namespace Tracking_Events.Data
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        [Required]
+        [MaxLength(65, ErrorMessage = "Max length is 65 characters")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(65, ErrorMessage = "Max length is 65 characters")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
         public int AccountType { get; set; }
 
         //Navigation Properties
@@ -88,6 +96,7 @@ namespace Tracking_Events.Data
         [Required]
         [Display(Name = "End Time")]
         [DisplayFormat(DataFormatString = "{0:g}")]
+        [Services.DateGreaterThan("StartTime", ErrorMessage = "End Time has to be later than Start Time")]
         public DateTime EndTime { get; set; }
 
         [Required]

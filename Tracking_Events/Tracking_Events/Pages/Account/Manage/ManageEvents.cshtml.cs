@@ -10,18 +10,18 @@ using Tracking_Events.Data;
 
 namespace Tracking_Events.Pages.Account.Manage
 {
-    public class ManageVenuesModel : PageModel
+    public class ManageEventsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ManageVenuesModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ManageEventsModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
-        public IList<Venue> Venues { get;set; }
+        public IList<Event> Event { get;set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -30,8 +30,8 @@ namespace Tracking_Events.Pages.Account.Manage
         {
             StatusMessage = statusMessage;
 
-            var users = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id);
-            Venues = await users.OrderBy(v => v.VenueName).ToListAsync();
+            var events = _context.Event.Include(e => e.Venue).ThenInclude(e => e.User).Where(e => e.Venue.User.Id == _userManager.GetUserAsync(User).Result.Id).AsQueryable();
+            Event = await events.OrderBy(e => e.EventName).ToListAsync();
         }
     }
 }

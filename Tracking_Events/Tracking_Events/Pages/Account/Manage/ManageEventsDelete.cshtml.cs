@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Tracking_Events.Data;
 
-namespace Tracking_Events.Pages.Events
+namespace Tracking_Events.Pages.Account.Manage
 {
-    public class DeleteModel : PageModel
+    public class ManageEventsDeleteModel : PageModel
     {
         private readonly ApplicationDbContext _context;
 
-        public DeleteModel(ApplicationDbContext context)
+        public ManageEventsDeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -21,8 +21,13 @@ namespace Tracking_Events.Pages.Events
         [BindProperty]
         public Event Event { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             Event = await _context.Event.SingleOrDefaultAsync(m => m.EventID == id);
 
             if (Event == null)
@@ -32,8 +37,13 @@ namespace Tracking_Events.Pages.Events
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             Event = await _context.Event.FindAsync(id);
 
             if (Event != null)
@@ -42,7 +52,7 @@ namespace Tracking_Events.Pages.Events
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ManageEvents", new { statusMessage = "Successfully deleted Event: " + Event.EventName });
         }
     }
 }

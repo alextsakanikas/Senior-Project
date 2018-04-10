@@ -1,0 +1,40 @@
+﻿@page
+@model Tracking_Events.Pages.Account.Manage.ManageRSVPsModel
+
+@{
+    ViewData["Title"] = "Manage RSVPs";
+}
+
+<h2>@ViewData["Title"]</h2>
+@Html.Partial("./Account/Manage/_StatusMessage", Model.StatusMessage)
+
+<table class="table">
+    <thead>
+        <tr class="info">
+            <th>
+                Unique RSVP ID
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RSVPs[0].Event.EventName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RSVPs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RsvpID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.EventName)
+                </td>
+                <td>
+                    <a asp-page="./ManageRSVPsDetails" asp-route-id="@item.RsvpID">Details</a> | 
+                    <a asp-page="./ManageRSVPsDelete" asp-route-id="@item.RsvpID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

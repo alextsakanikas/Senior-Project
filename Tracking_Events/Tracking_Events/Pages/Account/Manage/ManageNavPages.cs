@@ -18,6 +18,10 @@ namespace Tracking_Events.Pages.Account.Manage
 
         public static string ManageVenues => "ManageVenues";
 
+        public static string ManageRSVPs => "ManageRSVPs";
+
+        public static string ManageEvents => "ManageEvents";
+
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
@@ -27,6 +31,10 @@ namespace Tracking_Events.Pages.Account.Manage
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
 
         public static string ManageVenuesClass(ViewContext viewContext) => PageNavClass(viewContext, ManageVenues);
+
+        public static string ManageRSVPsClass(ViewContext viewContext) => PageNavClass(viewContext, ManageRSVPs);
+
+        public static string ManageEventsClass(ViewContext viewContext) => PageNavClass(viewContext, ManageEvents);
     
         public static string PageNavClass(ViewContext viewContext, string page)
         {
