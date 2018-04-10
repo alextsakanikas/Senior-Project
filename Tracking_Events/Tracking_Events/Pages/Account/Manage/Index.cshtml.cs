@@ -44,6 +44,16 @@ namespace Tracking_Events.Pages.Account.Manage
         public class InputModel
         {
             [Required]
+            [StringLength(65, ErrorMessage = "Must be no more than 65 characters")]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            [StringLength(65, ErrorMessage = "Must be no more than 65 characters")]
+            public string LastName { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -61,7 +71,10 @@ namespace Tracking_Events.Pages.Account.Manage
 
             Input = new InputModel
             {
-                Email = user.Email
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+ 
             };
 
             return Page();
@@ -81,6 +94,7 @@ namespace Tracking_Events.Pages.Account.Manage
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+
             if (Input.Email != user.Email)
             {
                 var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
@@ -91,8 +105,20 @@ namespace Tracking_Events.Pages.Account.Manage
                 }
             }
 
+            if (Input.FirstName != user.FirstName)
+            {
+                user.FirstName = Input.FirstName;
+                await _userManager.UpdateAsync(user);
+            }
+
+            if (Input.LastName != user.LastName)
+            {
+                user.LastName = Input.LastName;
+                await _userManager.UpdateAsync(user);
+            }
+
             StatusMessage = "Your profile has been updated";
-            return RedirectToPage();
+            return RedirectToPage(new { statusMessage = "Successfully changed settings" });
         }
 
         public IActionResult OnPostDelete()
