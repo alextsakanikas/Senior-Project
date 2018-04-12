@@ -140,10 +140,12 @@ namespace Tracking_Events.Data
         [Required]
         [Display(Name = "End Time")]
         [DisplayFormat(DataFormatString = "{0:g}")]
+        [Services.DateGreaterThan("StartTime", ErrorMessage = "End Time has to be later than Start Time")]
         public DateTime EndTime { get; set; }
 
         [Required]
         [Display(Name = "Capacity")]
+        [Range(5, int.MaxValue)]
         public int Capacity { get; set; }
 
         [MaxLength(1000, ErrorMessage = "Max length is 1000 characters")]

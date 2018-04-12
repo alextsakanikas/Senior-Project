@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tracking_Events.Services
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = false)]
     public class DateGreaterThan : ValidationAttribute
     {
         private readonly string _other;
