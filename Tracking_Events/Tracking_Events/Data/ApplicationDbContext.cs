@@ -22,6 +22,7 @@ namespace Tracking_Events.Data
             // Add your customizations after calling base.OnModelCreating(builder);
 
             builder.Entity<Venue>().HasOne(v => v.User).WithMany(a => a.Venues).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Venue>().Property(v => v.VenueName).HasDefaultValue("Personal");
 
             builder.Entity<Request>().HasOne(r => r.Venue).WithMany(v => v.Requests).OnDelete(DeleteBehavior.Cascade);
 

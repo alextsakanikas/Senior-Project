@@ -62,6 +62,7 @@ namespace Tracking_Events.Pages.Account
             [Display(Name = "Zip")]
             public int Zip { get; set; }
 
+            [Required]
             [Display(Name = "Venue Name")]
             public string VenueName { get; set; }
 
