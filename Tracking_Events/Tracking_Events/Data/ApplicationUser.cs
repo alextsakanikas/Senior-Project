@@ -83,6 +83,7 @@ namespace Tracking_Events.Data
         public string Genre { get; set; }
 
         [Required]
+        [Range(0, 21, ErrorMessage = "Age Requirement has to be between 0 and 21")]
         [Display(Name = "Age Req.")]
         public int AgeRequirement { get; set; }
 
@@ -129,6 +130,7 @@ namespace Tracking_Events.Data
         public string Genre { get; set; }
 
         [Required]
+        [Range(0, 21, ErrorMessage = "Age Requirement has to be between 0 and 21")]
         [Display(Name = "Age Requirement")]
         public int AgeRequirement { get; set; }
 
