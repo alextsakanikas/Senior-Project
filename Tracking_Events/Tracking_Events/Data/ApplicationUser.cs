@@ -187,6 +187,7 @@ namespace Tracking_Events.Data
     public class RSVP
     {
         [Key]
+        [Display(Name = "Unique RSVP ID")]
         public int RsvpID { get; set; }
 
         public ApplicationUser User { get; set; }

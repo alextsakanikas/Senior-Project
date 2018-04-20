@@ -65,8 +65,9 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-page="./ManageEventsEdit" asp-route-id="@item.EventID">Edit</a> | 
-                    <a asp-page="./ManageEventsDelete" asp-route-id="@item.EventID">Delete</a>
+                    <a asp-page="./ManageEventsEdit" asp-route-id="@item.EventID">Edit</a> |
+                    <a asp-page="./ManageEventsDelete" asp-route-id="@item.EventID">Delete</a> |
+                    <a asp-page="./RSVPList" asp-route-id="@item.EventID">RSVP List</a>
                 </td>
             </tr>
         }
