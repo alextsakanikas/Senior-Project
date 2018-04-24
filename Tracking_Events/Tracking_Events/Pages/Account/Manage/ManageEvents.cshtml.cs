@@ -30,7 +30,7 @@ namespace Tracking_Events.Pages.Account.Manage
         {
             StatusMessage = statusMessage;
 
-            var events = _context.Event.Include(e => e.Venue).ThenInclude(e => e.User).Where(e => e.Venue.User.Id == _userManager.GetUserAsync(User).Result.Id).AsQueryable();
+            var events = _context.Event.Include(e => e.Venue).ThenInclude(e => e.User).Where(e => e.Venue.User.Id == _userManager.GetUserAsync(User).Result.Id && e.EndTime > DateTime.Now).AsQueryable();
             Event = await events.OrderBy(e => e.EventName).ToListAsync();
         }
     }
