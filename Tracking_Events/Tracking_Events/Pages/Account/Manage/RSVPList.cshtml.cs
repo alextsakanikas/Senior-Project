@@ -11,9 +11,9 @@ namespace Tracking_Events.Pages.Account.Manage
 {
     public class RSVPListModel : PageModel
     {
-        private readonly Tracking_Events.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public RSVPListModel(Tracking_Events.Data.ApplicationDbContext context)
+        public RSVPListModel(ApplicationDbContext context)
         {
             _context = context;
         }
