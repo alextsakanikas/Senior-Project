@@ -22,7 +22,7 @@ namespace Tracking_Events.Pages.Reviews
 
         public async Task OnGetAsync()
         {
-            Event = await _context.Event.Include(ev => ev.Venue).ThenInclude(v => v.User).Include(ev => ev.Rsvps).Where(e => e.EndTime < DateTime.Now).ToListAsync();
+            Event = await _context.Event.Include(ev => ev.Venue).ThenInclude(v => v.User).Include(ev => ev.Rsvps).Where(e => e.EndTime <= DateTime.Now).ToListAsync();
         }
     }
 }
