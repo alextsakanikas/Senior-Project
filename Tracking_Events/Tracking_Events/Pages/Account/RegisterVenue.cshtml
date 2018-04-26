@@ -37,6 +37,11 @@
                 <span asp-validation-for="Input.Zip" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Input.Capacity"></label>
+                <input asp-for="Input.Capacity" class="form-control" />
+                <span asp-validation-for="Input.Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.VenueType"></label>
                 <select asp-for="Input.VenueType" asp-items="@Html.GetEnumSelectList<VenueType>()" class="form-control"></select>
             </div>

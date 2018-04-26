@@ -11,7 +11,7 @@ using Tracking_Events.Data;
 namespace Tracking_Events.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180410224636_ApplicationSchema")]
+    [Migration("20180426143619_ApplicationSchema")]
     partial class ApplicationSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -306,6 +306,8 @@ namespace Tracking_Events.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(150);
+
+                    b.Property<int>("Capacity");
 
                     b.Property<string>("City")
                         .IsRequired()

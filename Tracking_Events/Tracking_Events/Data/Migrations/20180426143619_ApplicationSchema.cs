@@ -164,6 +164,7 @@ namespace Tracking_Events.Migrations
                     VenueID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Address = table.Column<string>(maxLength: 150, nullable: false),
+                    Capacity = table.Column<int>(nullable: false),
                     City = table.Column<string>(maxLength: 150, nullable: false),
                     State = table.Column<string>(maxLength: 2, nullable: false),
                     UserId = table.Column<string>(nullable: true),

@@ -63,6 +63,11 @@ namespace Tracking_Events.Pages.Account
             public int Zip { get; set; }
 
             [Required]
+            [Display(Name = "Capacity")]
+            [Range(5, int.MaxValue, ErrorMessage = "Must be minimum of 5")]
+            public int Capacity { get; set; }
+
+            [Required]
             [Display(Name = "Venue Name")]
             public string VenueName { get; set; }
 
@@ -80,7 +85,7 @@ namespace Tracking_Events.Pages.Account
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                Venue venue = new Venue { Address = capitalize.ToTitleCase(Input.Address), City = capitalize.ToTitleCase(Input.City), State = Input.State.ToUpper(), Zip = Input.Zip, VenueName = capitalize.ToTitleCase(Input.VenueName), VenueType = Convert.ToInt32(Input.VenueType) };
+                Venue venue = new Venue { Address = capitalize.ToTitleCase(Input.Address), City = capitalize.ToTitleCase(Input.City), State = Input.State.ToUpper(), Zip = Input.Zip, VenueName = capitalize.ToTitleCase(Input.VenueName), Capacity = Input.Capacity, VenueType = Convert.ToInt32(Input.VenueType) };
 
                 venue.User = _userManager.GetUserAsync(User).Result;
 

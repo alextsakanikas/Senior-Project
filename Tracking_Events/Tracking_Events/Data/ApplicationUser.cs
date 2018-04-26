@@ -54,6 +54,11 @@ namespace Tracking_Events.Data
         [Required]
         [Display(Name = "Zip")]
         public int Zip { get; set; }
+
+        [Required]
+        [Display(Name = "Capacity")]
+        [Range(5, int.MaxValue, ErrorMessage = "Must be minimum of 5")]
+        public int Capacity { get; set; }
         
         [Display(Name = "Venue Type")]
         public int VenueType { get; set; }
@@ -100,6 +105,7 @@ namespace Tracking_Events.Data
 
         [Required]
         [Display(Name = "Capacity")]
+        [Range(5, int.MaxValue, ErrorMessage = "Must be minimum of 5")]
         public int Capacity { get; set; }
 
         [MaxLength(1000, ErrorMessage = "Max length is 1000 characters")]

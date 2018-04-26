@@ -32,16 +32,25 @@ namespace Tracking_Events.Pages.Events
 
             return Page();
         }
-
+        [TempData]
+        public string StatusMessage { get; set; }
         [BindProperty]
         public Request Request { get; set; }
         public IEnumerable<SelectListItem> VenueSelectList { get; set; }
 
         [BindProperty]
-        public string VenueID { get; set; }
+        public int VenueID { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Venue venue = await _context.Venue.Where(v => v.VenueID == VenueID).SingleOrDefaultAsync();
+            if (venue.Capacity < Request.Capacity)
+            {
+                IQueryable<Venue> venues = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id).AsQueryable();
+                VenueSelectList = venues.Select(v => new SelectListItem { Value = v.VenueID.ToString(), Text = v.VenueName });
+                StatusMessage = "Capacity must be less than or equal to " + venue.Capacity + " for " + venue.VenueName;
+                return Page();
+            }
             if (!ModelState.IsValid)
             {
                 IQueryable<Venue> venues = _context.Venue.Include(v => v.User).Where(v => v.User.Id == _userManager.GetUserAsync(User).Result.Id).AsQueryable();

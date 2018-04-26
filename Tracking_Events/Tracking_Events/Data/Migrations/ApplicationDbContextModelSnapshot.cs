@@ -306,6 +306,8 @@ namespace Tracking_Events.Migrations
                         .IsRequired()
                         .HasMaxLength(150);
 
+                    b.Property<int>("Capacity");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasMaxLength(150);
