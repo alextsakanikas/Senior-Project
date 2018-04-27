@@ -8,15 +8,6 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<p>
-    @if (SignInManager.IsSignedIn(User))
-    {
-        @if (UserManager.GetUserAsync(User).Result.AccountType == 2)
-        {
-            <a asp-page="Create">Create New</a>
-        }
-    }
-</p>
 <form asp-page="./Index" method="get" asp-route-sortOrder="@Model.CurrentSort">
     <p>
         Filter by <b style="color:red">Venue Name</b> or <b style="color:red">Rating</b>:
@@ -32,6 +23,9 @@
                 <a asp-page="./Index" asp-route-sortOrder="@Model.VenueSort" asp-route-searchString="@Model.CurrentSearch">
                     @Html.DisplayNameFor(model => model.Reviews[0].Venue.VenueName)
                 </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviews[0].Event.EventName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Reviews[0].UserName)
@@ -50,6 +44,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Venue.VenueName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.EventName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)

@@ -1,9 +1,7 @@
 ﻿@page
-@model Tracking_Events.Pages.Events.DetailsModel
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@model Tracking_Events.Pages.Reviews.DetailsModel
 @{
-    ViewData["Title"] = "Event Details";
+    ViewData["Title"] = "Review Details";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -48,7 +46,7 @@
 
         //Used to get an address and set markers
         function getlocation() {
-            var address = @Html.Raw(Json.Serialize(Model.Event.Venue.Address + " " + Model.Event.Venue.City + " " + Model.Event.Venue.State + " " + Model.Event.Venue.Zip));
+            var address = @Html.Raw(Json.Serialize(Model.Review.Event.Venue.Address + " " + Model.Review.Event.Venue.City + " " + Model.Review.Event.Venue.State + " " + Model.Review.Event.Venue.Zip));
 
             geocoder.geocode({ 'address': address }, function (results, status) {
                 if (status == 'OK') {
@@ -87,113 +85,95 @@
             map.fitBounds(boundbox);
         }
 </script>
-@Html.Partial("./Account/Manage/_StatusMessage", Model.StatusMessage)
 
 <div class="row">
     <div class="col-md-6">
         <hr />
         <dl class="dl-horizontal">
-            @if (Model.Event.Venue.VenueType == (int)Tracking_Events.Pages.Account.VenueType.Personal)
+            @if (Model.Review.Event.Venue.VenueType == (int)Tracking_Events.Pages.Account.VenueType.Personal)
             {
                 <dt class="text-primary">
                     Hosted By
                 </dt>
                 <dd>
-                    @(Model.Event.Venue.User.FirstName + " " + Model.Event.Venue.User.LastName)
+                    @(Model.Review.Event.Venue.User.FirstName + " " + Model.Review.Event.Venue.User.LastName)
                 </dd>
             }
             <dt>
-                @Html.DisplayNameFor(model => model.Event.Venue.VenueName)
+                @Html.DisplayNameFor(model => model.Review.Event.Venue.VenueName)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.Venue.VenueName)
+                @Html.DisplayFor(model => model.Review.Event.Venue.VenueName)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.EventName)
+                @Html.DisplayNameFor(model => model.Review.Event.EventName)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.EventName)
+                @Html.DisplayFor(model => model.Review.Event.EventName)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.Genre)
+                @Html.DisplayNameFor(model => model.Review.Event.Genre)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.Genre)
+                @Html.DisplayFor(model => model.Review.Event.Genre)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.AgeRequirement)
+                @Html.DisplayNameFor(model => model.Review.Event.StartTime)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.AgeRequirement)+
+                @Html.DisplayFor(model => model.Review.Event.StartTime)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.StartTime)
+                @Html.DisplayNameFor(model => model.Review.Event.EndTime)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.StartTime)
+                @Html.DisplayFor(model => model.Review.Event.EndTime)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.EndTime)
+                @Html.DisplayNameFor(model => model.Review.Event.Description)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.EndTime)
-            </dd>
-            <dt>
-                RSVP/@Html.DisplayNameFor(model => model.Event.Capacity)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Event.Rsvps.Count)/@Html.DisplayFor(model => model.Event.Capacity)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.Description)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Event.Description)
+                @Html.DisplayFor(model => model.Review.Event.Description)
                 <br />
                 <br />
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.Venue.Address)
+                @Html.DisplayNameFor(model => model.Review.Event.Venue.Address)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.Venue.Address)
+                @Html.DisplayFor(model => model.Review.Event.Venue.Address)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.Venue.City)
+                @Html.DisplayNameFor(model => model.Review.Event.Venue.City)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.Venue.City)
+                @Html.DisplayFor(model => model.Review.Event.Venue.City)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.Venue.State)
+                @Html.DisplayNameFor(model => model.Review.Event.Venue.State)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.Venue.State)
+                @Html.DisplayFor(model => model.Review.Event.Venue.State)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.Venue.Zip)
+                @Html.DisplayNameFor(model => model.Review.Event.Venue.Zip)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Event.Venue.Zip)
+                @Html.DisplayFor(model => model.Review.Event.Venue.Zip)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Event.Venue.VenueType)
+                @Html.DisplayNameFor(model => model.Review.Event.Venue.VenueType)
             </dt>
             <dd>
-                @(((Account.VenueType)Model.Event.Venue.VenueType).ToString())
-            </dd>
-            <dd>
+                @(((Account.VenueType)Model.Review.Event.Venue.VenueType).ToString())
                 <br />
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    @if (Model.Event.Capacity > Model.Event.Rsvps.Count && UserManager.GetUserAsync(User).Result.AccountType == 1)
-                    {
-                        <form asp-route-id="@Model.Event.EventID" asp-route-rsvpAmount="@Model.RSVPAmount" method="post">
-                            <input type="number" asp-for="@Model.RSVPAmount" min="1" max="@(Model.Event.Capacity - Model.Event.Rsvps.Count)" />
-                            <button type="submit">RSVP</button>
-                        </form>
-                    }
-                }
+                <br />
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Review.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Review.Description)
             </dd>
         </dl>
     </div>
@@ -202,12 +182,5 @@
     </div>
 </div>
 <div>
-    @if (SignInManager.IsSignedIn(User))
-    {
-        @if (UserManager.GetUserAsync(User).Result.AccountType == 1 && UserManager.GetUserAsync(User).Result.Id == Model.Event.Venue.User.Id)
-        {
-            <a asp-page="/Account/Manage/ManageEventsEdit" asp-route-id="@Model.Event.EventID">Edit Event</a> <span> | </span>
-        }
-    }
     <a asp-page="./Index">Back to List</a>
 </div>

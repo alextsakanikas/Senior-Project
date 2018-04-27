@@ -63,7 +63,7 @@ namespace Tracking_Events.Pages.Account
             public int Zip { get; set; }
 
             [Required]
-            [Display(Name = "Capacity")]
+            [Display(Name = "Max Capacity")]
             [Range(5, int.MaxValue, ErrorMessage = "Must be minimum of 5")]
             public int Capacity { get; set; }
 

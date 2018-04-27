@@ -265,6 +265,8 @@ namespace Tracking_Events.Migrations
                         .IsRequired()
                         .HasMaxLength(1000);
 
+                    b.Property<int?>("EventID");
+
                     b.Property<int>("Rating");
 
                     b.Property<string>("UserName")
@@ -273,6 +275,8 @@ namespace Tracking_Events.Migrations
                     b.Property<int?>("VenueID");
 
                     b.HasKey("ReviewID");
+
+                    b.HasIndex("EventID");
 
                     b.HasIndex("VenueID");
 
@@ -396,10 +400,15 @@ namespace Tracking_Events.Migrations
 
             modelBuilder.Entity("Tracking_Events.Data.Review", b =>
                 {
+                    b.HasOne("Tracking_Events.Data.Event", "Event")
+                        .WithMany("Reviews")
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Tracking_Events.Data.Venue", "Venue")
                         .WithMany("Reviews")
                         .HasForeignKey("VenueID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Tracking_Events.Data.RSVP", b =>

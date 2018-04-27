@@ -56,7 +56,7 @@ namespace Tracking_Events.Data
         public int Zip { get; set; }
 
         [Required]
-        [Display(Name = "Capacity")]
+        [Display(Name = "Max Capacity")]
         [Range(5, int.MaxValue, ErrorMessage = "Must be minimum of 5")]
         public int Capacity { get; set; }
         
@@ -165,6 +165,8 @@ namespace Tracking_Events.Data
 
         //Navigation property for RSVPs
         public List<RSVP> Rsvps { get; set; }
+
+        public List<Review> Reviews { get; set; }
     }
 
     public class Review
@@ -176,8 +178,9 @@ namespace Tracking_Events.Data
         [MaxLength(150, ErrorMessage = "Max length is 150 characters")]
         public string UserName { get; set; }
 
-        //Used to reference Venue table where the account is stored
+        //Used to reference Other tables
         public Venue Venue { get; set; }
+        public Event Event { get; set; }
 
         [Required]
         [Display(Name = "Rating out of 5")]

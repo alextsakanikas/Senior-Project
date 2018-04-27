@@ -27,7 +27,9 @@ namespace Tracking_Events.Data
 
             builder.Entity<Event>().HasOne(e => e.Venue).WithMany(v => v.Events).OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Review>().HasOne(r => r.Venue).WithMany(v => v.Reviews).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Review>().HasOne(r => r.Venue).WithMany(v => v.Reviews).OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Review>().HasOne(r => r.Event).WithMany(e => e.Reviews).OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<RSVP>().HasOne(r => r.User).WithMany(a => a.Rsvps).OnDelete(DeleteBehavior.Restrict);
 

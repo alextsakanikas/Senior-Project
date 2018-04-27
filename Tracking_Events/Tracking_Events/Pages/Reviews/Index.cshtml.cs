@@ -34,7 +34,7 @@ namespace Tracking_Events.Pages.Reviews
             RatingSort = sortOrder == "Rating" ? "rating_desc" : "Rating";
             CurrentSort = sortOrder;
 
-            IQueryable<Review> reviews = _context.Review.Include(r => r.Venue).AsQueryable();
+            IQueryable<Review> reviews = _context.Review.Include(r => r.Venue).Include(r => r.Event).AsQueryable();
 
             #region Filtering
             CurrentSearch = searchString;

@@ -41,6 +41,8 @@ namespace Tracking_Events.Pages.Account.Manage
 
             if (Venue != null)
             {
+                var review = await _context.Review.Include(r => r.Venue).Where(r => r.Venue == Venue).ToArrayAsync();
+                _context.Review.RemoveRange(review);
                 _context.Venue.Remove(Venue);
                 await _context.SaveChangesAsync();
             }

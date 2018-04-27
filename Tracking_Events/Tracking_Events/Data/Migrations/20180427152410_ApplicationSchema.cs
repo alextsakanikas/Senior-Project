@@ -243,6 +243,7 @@ namespace Tracking_Events.Migrations
                     ReviewID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 1000, nullable: false),
+                    EventID = table.Column<int>(nullable: true),
                     Rating = table.Column<int>(nullable: false),
                     UserName = table.Column<string>(maxLength: 150, nullable: true),
                     VenueID = table.Column<int>(nullable: true)
@@ -251,11 +252,17 @@ namespace Tracking_Events.Migrations
                 {
                     table.PrimaryKey("PK_Review", x => x.ReviewID);
                     table.ForeignKey(
+                        name: "FK_Review_Event_EventID",
+                        column: x => x.EventID,
+                        principalTable: "Event",
+                        principalColumn: "EventID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Review_Venue_VenueID",
                         column: x => x.VenueID,
                         principalTable: "Venue",
                         principalColumn: "VenueID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -332,6 +339,11 @@ namespace Tracking_Events.Migrations
                 name: "IX_Request_VenueID",
                 table: "Request",
                 column: "VenueID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Review_EventID",
+                table: "Review",
+                column: "EventID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Review_VenueID",
