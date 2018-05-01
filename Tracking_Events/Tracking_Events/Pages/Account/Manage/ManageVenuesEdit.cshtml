@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Venue.Zip" class="control-label"></label>
-                    <input asp-for="Venue.Zip" class="form-control" />
+                    <input min="0" max="99999" asp-for="Venue.Zip" class="form-control" />
                     <span asp-validation-for="Venue.Zip" class="text-danger"></span>
                 </div>
                 <div class="form-group">
